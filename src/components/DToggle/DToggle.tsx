@@ -55,7 +55,7 @@ const DToggle = (props: DToggleProps) =>  {
   const [isValidate, setIsValidate] = useState(true);
 
   useEffect( () => {
-    onFormUpdate(index, value);
+    onFormUpdate(index, toggleValue);
     setIsValidate(validator(toggleValue));
   }, [toggleValue, isValidate])
   

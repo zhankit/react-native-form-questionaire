@@ -52,9 +52,13 @@ const DNumberInput = (props: DNumberInputProps) =>  {
   const [isValidate, setIsValidate] = useState(true);
 
   useEffect( () => {
-    if (index > 0) onFormUpdate(index, textValue);
-    else  onFormUpdate(textValue);
+
+    if (index >= 0) onFormUpdate(index, textValue);
+    else onFormUpdate(textValue);
+    
     setIsValidate(validator(textValue));
+    console.log('validator', isValidate);
+
   }, [textValue, isValidate])
   
   return(
@@ -68,7 +72,7 @@ const DNumberInput = (props: DNumberInputProps) =>  {
         style={[styles.TextInputStyle]}
         placeholder={placeholder} 
         />  
-      { !isValidate || (<Text style={{color : '#e00000'}}> {validatorMessage} </Text>) }
+      { !isValidate && (<Text style={{color : '#e00000'}}> {validatorMessage} </Text>) }
     </View>    
   );
 
@@ -82,7 +86,7 @@ DNumberInput.propTypes = {
 
 DNumberInput.defaultProps = {
   required: true,
-  validator: (text: string) => { var reg = new RegExp('/^-?\d*\.?\d*$/'); console.log('asd', reg.test(text)); return reg.test(text) },
+  validator: (text: string) => { return !isNaN(Number(text)) },
   validatorMessage: 'Input must be number!'
 };
 

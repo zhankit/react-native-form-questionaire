@@ -77,7 +77,7 @@ class DForm extends React.Component   {
   handleForm = (index: number, value: string) => {
     let questions = [...this.state.questions];
     let question = {
-      ...this.state.questions[index],
+      ...questions[index],
       value: value
     }
     questions[index] = question;

@@ -52,8 +52,10 @@ const DTextInput = (props: DTextInputProps) =>  {
   const [isValidate, setIsValidate] = useState(true);
 
   useEffect( () => {
+    
     if (index >= 0 ) onFormUpdate(index, textValue);
     else  onFormUpdate(textValue);
+
     setIsValidate(validator(textValue));
   }, [textValue, isValidate])
   

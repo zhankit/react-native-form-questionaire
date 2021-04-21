@@ -4,10 +4,10 @@ import Dform from '../../components/DForm/DForm';
 import { View } from '../../components/Themed/Themed';
 
 const styles = StyleSheet.create({
-  container: {
+  ContainerStyle: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'stretch',
+    justifyContent: 'flex-start',
   },
   title: {
     fontSize: 20,
@@ -24,7 +24,7 @@ const formA = (props) => {
   const { title, questions } = props.route.params;
 
   return (
-    <View style={styles.container}>
+    <View style={styles.ContainerStyle}>
       <Dform
         title='Customized Form'
         questions={questions}>

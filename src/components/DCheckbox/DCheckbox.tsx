@@ -51,11 +51,11 @@ const DCheckbox = (props: DCheckboxProps) =>  {
   
   const {id, title, index, required, value, placeholder, options, validator, validatorMessage, onFormUpdate} = props;
 
-  const [checkedValue, setcheckedValue] = useState(false);
+  const [checkedValue, setcheckedValue] = useState(value);
   const [isValidate, setIsValidate] = useState(true);
 
   useEffect( () => {
-    onFormUpdate(index, value);
+    onFormUpdate(index, checkedValue);
     setIsValidate(validator(checkedValue));
   }, [checkedValue, isValidate])
   
@@ -82,6 +82,7 @@ DCheckbox.propTypes = {
 
 DCheckbox.defaultProps = {
   required: true,
+  value: false,
   validator: () => {},
   validatorMessage: ''
 };
