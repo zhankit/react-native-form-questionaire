@@ -26,12 +26,12 @@ const styles = StyleSheet.create({
 interface DButtonProps {
   title: string;
   loading: boolean;
+  style: any;
   onPress: (event: GestureResponderEvent) => void
 }
 
 const DButton = ( props: DButtonProps) => {
-  const { title, loading, onPress, ...rest } = props;
-
+  const { title, loading, onPress, style, ...rest } = props;
   return (
     <TouchableOpacity onPress={onPress}>
       <View style={styles.btnContainerStyle}>
@@ -47,4 +47,4 @@ DButton.prototype = {
   onPress: PropTypes.func.isRequired,
 }
 
-export default DButton
+export default DButton;

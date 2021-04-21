@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import DButton from '../../components/DButton';
-import { Text, View } from '../../components/Themed';
+import { Text, View } from '../../components/Themed/Themed';
 import { useNavigation } from '@react-navigation/native';
 
 const stylesTitle = StyleSheet.create({ 
@@ -35,10 +35,8 @@ const DashboardHomeScreen = () => {
 
   return (
     <View style={styles.container}>
-    <Text style={stylesTitle.container}>Welcome to the demo of React-Forms Component!</Text>
-    <DButton title="Form A" loading={false} onPress={ () => navigation.navigate('formA')}></DButton>
-    <DButton title="Form B" loading={false} onPress={ () => navigation.navigate('formB')}></DButton>
-    {/* <StatusBar style="auto" /> */}
+    <Text style={stylesTitle.container}>Welcome to the demo of Dynamic React-Forms Component!</Text>
+    <DButton title="Start" loading={false} onPress={ () => navigation.navigate('formCreation')}></DButton>
   </View>
   );
 }

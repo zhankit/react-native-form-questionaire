@@ -3,9 +3,10 @@ import { StatusBar } from 'expo-status-bar';
 import { Button, ColorSchemeName, StyleSheet , Text, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { RootStackParamList } from './types';
-import DashboardHomeScreen from '../modules/home/Home';
-import formA from '../modules/formA/formA';
-import formB from '../modules/formB/formB';
+import DashboardHomeScreen from '../modules/home';
+import form from '../modules/form';
+import formCreation from '../modules/formCreation';
+
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -40,8 +41,8 @@ const RootNavigator = () => {
         <Stack.Screen name="Home" options={{ title: 'Home' }}>
           {props => <DashboardHomeScreen {...props}/>}
         </Stack.Screen>
-        <Stack.Screen name="formA" component={formA} options={{ title: 'Form A' }}/>
-        <Stack.Screen name="formB" component={formB} options={{ title: 'Form B' }}/>
+        <Stack.Screen name="form" component={form} options={{ title: 'Form' }}/>
+        <Stack.Screen name="formCreation" component={formCreation} options={{ title: 'Form Creation' }}/>
       </Stack.Navigator>
     );
   }

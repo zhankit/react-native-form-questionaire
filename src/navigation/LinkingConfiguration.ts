@@ -12,14 +12,14 @@ export default {
               LoginSreen: 'home'
             }
           },
-          formA: {
+          form: {
             screens: {
-              DashboardMainScreen: 'Form A',
+              DashboardMainScreen: 'Form',
             },
           },
-          formB: {
+          formCreation: {
             screens: {
-              BookingMainScreen: 'Form B',
+              formCreationScreen: 'formCreation',
             },
           },
         },
