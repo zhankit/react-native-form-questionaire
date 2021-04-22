@@ -5,19 +5,18 @@ import { DButton, DNumberInput, DTextInput, DToggle } from '..';
 import DDropdown from '../DCheckbox';
 import DCheckbox from '../DCheckbox';
 
-const containerStyles = StyleSheet.create({
+const styles = StyleSheet.create({
   ContainerStyle: {
     flex: 1,
     alignItems: 'stretch',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
   },
   TextStyle:{
     fontWeight: "600"
   },
   TextInputStyle: {
     color: 'black',
-    outlineWidth: 1,
-    outlineColor:'#3CAEA3',
+    textDecorationColor:'#3CAEA3',
     overlayColor: 'blue',
     borderColor: 'black',
     borderWidth: 1,
@@ -26,10 +25,7 @@ const containerStyles = StyleSheet.create({
     height: '50px',
     tintColor: 'black'
   },
-})
-
-const styles = StyleSheet.create({
-  TextStyle:{
+  titleTextStyle:{
     fontSize: 20,
     fontWeight: 'bold',
     paddingHorizontal: '20px',
@@ -58,37 +54,29 @@ interface option {
   value: string
 }
 
-/**
- * To validate the result with validation and required in current form of questions.
- * It will focus on and off all text field to ensure that is okay
- * @param result 
- */
-const review = ( result: question[] ) => { 
-  console.log('question', result);
-}
+const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
+  const { title, questions, ...rest } = props;
 
-class DForm extends React.Component   {
-  // const { ...rest } = props;
-  state = {
-    title: this.props.title,
-    questions: this.props.questions
-  };
+  const [ questionsValue, setquestionsValue ] = React.useState(questions);
 
-  handleForm = (index: number, value: string) => {
-    let questions = [...this.state.questions];
+  const handleForm = (index: number, value: string) => {
+    let questions = [...questionsValue];
     let question = {
       ...questions[index],
       value: value
     }
     questions[index] = question;
-    this.setState( {questions: questions});
-}
+    setquestionsValue(questions);
+  }
 
-  render() {
-    return (
-    <View style={containerStyles.ContainerStyle}>
-      <Text style={styles.TextStyle}> {this.state.title} </Text>
-      { this.state.questions.sort( (a: question, b: question) => { return Number(a.order) - Number(b.order)})
+  const review = ( result: question[] ) => { 
+    console.log('question', result);
+  }  
+
+  return (
+    <View style={styles.ContainerStyle}>
+      <Text style={styles.titleTextStyle}> {title} </Text>
+      { questionsValue.sort( (a: question, b: question) => { return Number(a.order) - Number(b.order)})
         .map( (question: question, index: number) => {
           switch( question.type ) {
             case 'textfield':
@@ -98,7 +86,7 @@ class DForm extends React.Component   {
                       index={index}
                       value={""}
                       required={question.required ? true : false}
-                      onFormUpdate={this.handleForm}
+                      onFormUpdate={handleForm}
                       validator={question.validator}
                       validatorMessage={question.validatorMsg}
                       />;
@@ -111,7 +99,7 @@ class DForm extends React.Component   {
                         index={index}
                         value={""}
                         required={question.required ? true : false}
-                        onFormUpdate={this.handleForm}
+                        onFormUpdate={handleForm}
                         />;
               break;
             
@@ -121,7 +109,7 @@ class DForm extends React.Component   {
                         title={question.title} 
                         index={index}
                         required={question.required ? true : false}
-                        onFormUpdate={this.handleForm}
+                        onFormUpdate={handleForm}
                         validator={question.validator}
                         validatorMessage={question.validatorMsg}
                         />;
@@ -133,23 +121,27 @@ class DForm extends React.Component   {
                         title={question.title} 
                         index={index}
                         required={question.required ? true : false}
-                        onFormUpdate={this.handleForm}
+                        onFormUpdate={handleForm}
                         validator={question.validator}
                         validatorMessage={question.validatorMsg}
                        />;
               break;
           }
       })}
-      <DButton title="Review" loading={false} onPress={ () => review(this.state.questions)}></DButton>
+      <DButton title="Review" loading={false} onPress={ () => review(questionsValue)}></DButton>
     </View>
     );
-  }
 }
 
-// DForm.propTypes = {
-//   title: PropTypes.string,
-//   // questions: PropTypes.arrayOf<>,
-// };
+DForm.propTypes = {
+  title: PropTypes.string,
+  type: PropTypes.oneOf([
+    'textfield',
+    'number',
+    'toggle',
+    'checkbox'
+  ]),
+};
 
 
 export default DForm

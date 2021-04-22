@@ -7,8 +7,8 @@ const styles = StyleSheet.create({
   ContainerStyle: {
     color: 'black',
     // overlayColor: 'black',
-    outlineWidth: 1,
-    outlineColor:'#3CAEA3',
+    
+    textDecorationColor:'#3CAEA3',
     overlayColor: 'blue',
     marginHorizontal: '20px',
     marginTop: '10px',
@@ -20,8 +20,8 @@ const styles = StyleSheet.create({
   TextInputStyle: {
     color: 'black',
     // overlayColor: 'black',
-    outlineWidth: 1,
-    outlineColor:'#3CAEA3',
+    
+    textDecorationColor:'#3CAEA3',
     overlayColor: 'blue',
     borderColor: 'black',
     borderWidth: 1,
@@ -53,10 +53,9 @@ const DTextInput = (props: DTextInputProps) =>  {
 
   useEffect( () => {
     
-    if (index >= 0 ) onFormUpdate(index, textValue);
-    else  onFormUpdate(textValue);
-
     setIsValidate(validator(textValue));
+    onFormUpdate(index, textValue, isValidate);
+
   }, [textValue, isValidate])
   
   return(

@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { DButton, DDropdown, DTextInput } from '../../components';
 import { Text, View } from '../../components/Themed/Themed';
 import { Container } from '@material-ui/core';
 import { useNavigation } from '@react-navigation/native';
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import CardView from 'react-native-cardview'
+import './formCreation.css';
 
 const styles = StyleSheet.create({
   ContainerStyle: {
@@ -26,18 +27,6 @@ const styles = StyleSheet.create({
     width: '80%',
   },
 });
-/**
- * 
- * @param props id: 'firstName',
-          order: 1, 
-          type: 'textfield', 
-          title: 'First name', 
-          required: true,
-          value: '',
-          validator: (text: string) => { return text.length > 0},
-          validatorMsg: 'Cannot be empty...'
- * @returns 
- */
 
 interface question {
   id: string;
@@ -58,7 +47,6 @@ interface option {
 
 const formCreation = (props) => {
 
-  const {}  = props;
   const navigation = useNavigation();
   const options = [
     { label: 'Textfield', value: 'textfield'}, 
@@ -68,14 +56,19 @@ const formCreation = (props) => {
   ];
   const[questions, setQuestion] = React.useState([] as any);
   const[titleValue, setTitleValue] = React.useState('');
+  const[isValidated, setisValidated] = React.useState(true);
   const[optionValue, setoptionValue] = React.useState(options[0]);
 
-  const handleForm = (value: string) => {
+  const handleForm = (index: string, value: string, isValidate: boolean) => {
     setTitleValue(value);
+    setisValidated(isValidate);
   }
-
+  
   const addItem = () => {
 
+    if ( !isValidated ) {
+      return "SMTH";
+    }
     const question: question = {
       id: titleValue,
       order: questions.length,
@@ -96,8 +89,6 @@ const formCreation = (props) => {
   };
 
   const confirmList = () => {
-    
-
     navigation.navigate('form', { questions: questions, title: "Custom Form"});
   };
 
@@ -107,8 +98,8 @@ const formCreation = (props) => {
         title={"Title"} 
         value={titleValue} 
         onFormUpdate={handleForm}
-        validator={ (value: string) => { return String(value).length }}
-        validatorMessage={"Field must be not empty"}
+        validator={ (value: string) => { const letters = new RegExp('^[a-zA-Z0-9 ]+$'); return String(value).length > 0 && letters.test(value) }}
+        validatorMessage={"Field must be not empty or contains special symbol"}
       />
 
       <Container style={{ paddingLeft: "20px", paddingRight: "20px", paddingTop: "10px"}}>
@@ -116,20 +107,26 @@ const formCreation = (props) => {
         <Dropdown 
           options={options} 
           value={optionValue.value} 
-          onChange={ (args: string) => { setoptionValue(args);}} 
+          onChange={ (args) => { setoptionValue(args);}} 
           placeholder="Select an option" />
       </Container>
 
-      <DButton title="Add Item" loading={false} onPress={ () => addItem()}></DButton>
-      <DButton style={{ backgroundColor: 'black'}} title="Clear List" loading={false} onPress={ () => clearList()}></DButton>
+      <Container style={{ paddingTop: "10px", display: 'inline-flex', placeContent: 'center'}}>
+        <DButton title="Clear" loading={false} onPress={ () => clearList()}></DButton>
+        <DButton title="Add" loading={false} onPress={ () => addItem()}></DButton>
+      </Container>
+
+
       {
         questions.map( (question: question, index: number) => {
-          return (<Container style={{ paddingLeft: "20px", paddingRight: "20px", paddingTop: "10px"}}>
+          return (
+          
+          <Container style={{ paddingLeft: "20px", paddingRight: "20px", paddingTop: "10px", boxShadow: '20'}}>
             <Text> {index + 1}.  {question.type} - {question.title} </Text>
           </Container>)
         })
       }
-            <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton>
+      { (questions.length > 0) && <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton> } 
 
     </View>
   );

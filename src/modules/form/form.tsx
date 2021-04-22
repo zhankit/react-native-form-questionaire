@@ -26,7 +26,7 @@ const formA = (props) => {
   return (
     <View style={styles.ContainerStyle}>
       <Dform
-        title='Customized Form'
+        title=''
         questions={questions}>
       </Dform>
     </View>

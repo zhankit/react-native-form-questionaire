@@ -9,8 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     color: 'black',
     // overlayColor: 'black',
-    outlineWidth: 1,
-    outlineColor:'#3CAEA3',
+    textDecorationColor:'#3CAEA3',
     overlayColor: 'blue',
     marginHorizontal: '20px',
     marginTop: '10px',
@@ -22,8 +21,7 @@ const styles = StyleSheet.create({
   TextInputStyle: {
     color: 'black',
     // overlayColor: 'black',
-    outlineWidth: 1,
-    outlineColor:'#3CAEA3',
+    textDecorationColor:'#3CAEA3',
     overlayColor: 'blue',
     borderColor: 'black',
     borderWidth: 1,
@@ -65,6 +63,7 @@ const DCheckbox = (props: DCheckboxProps) =>  {
       <Checkbox 
         status={checkedValue ? 'checked' : 'unchecked'}
         color={'black'}
+        uncheckedColor={'black'}
         onPress={() => setcheckedValue(!checkedValue)}
         />       
         <Text style={styles.TextStyle}>{title}</Text> 

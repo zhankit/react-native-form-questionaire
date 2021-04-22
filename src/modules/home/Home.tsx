@@ -4,17 +4,14 @@ import DButton from '../../components/DButton';
 import { Text, View } from '../../components/Themed/Themed';
 import { useNavigation } from '@react-navigation/native';
 
-const stylesTitle = StyleSheet.create({ 
+const styles = StyleSheet.create({ 
   container: { 
     fontWeight: 'bold', 
     fontSize: 30,
     paddingLeft: '20px',
     paddingRight: '20px',
-  }
-});
-
-const styles = StyleSheet.create({
-  container: {
+  },
+  mainContainer: {
     flex: 1,
     alignItems: 'stretch',
     justifyContent: 'center',
@@ -22,22 +19,21 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
+  }
 });
 
-const DashboardHomeScreen = () => {
+interface HomeScreenProps {
+  props: any
+}
+
+const HomeScreen = (props: HomeScreenProps) => {
   const navigation = useNavigation();
 
   return (
-    <View style={styles.container}>
-    <Text style={stylesTitle.container}>Welcome to the demo of Dynamic React-Forms Component!</Text>
+  <View style={styles.mainContainer}>
+    <Text style={styles.container}>Welcome to the demo of Dynamic React-Forms Component!</Text>
     <DButton title="Start" loading={false} onPress={ () => navigation.navigate('formCreation')}></DButton>
   </View>
   );
 }
-export default DashboardHomeScreen;
+export default HomeScreen;
