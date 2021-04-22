@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import Navigation from './src/navigation';
 import { Provider as PaperProvider } from 'react-native-paper';
 import useCachedResources from './src/assets/hooks/useCachedResources';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/modules/home';
+import { Provider, connect } from 'react-redux';
+// import { store } from './src/redux/store/store';
 
 const App = () => {
 
@@ -19,11 +18,6 @@ const App = () => {
   else {
       return (
       // <Provider store={store}>
-      // <NavigationContainer>
-      //   <Stack.Navigator>
-      //     <Stack.Screen name="walao" component={HomeScreen}></Stack.Screen>
-      //   </Stack.Navigator>
-      // </NavigationContainer>
         <PaperProvider>
          <Navigation colorScheme={null} />
          <StatusBar />

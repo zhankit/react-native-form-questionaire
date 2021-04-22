@@ -51,6 +51,7 @@ const DNumberInput = (props: DNumberInputProps) =>  {
         value={textValue}
         onChangeText={(text) => { setTextValue(text)}}
         selectionColor={'blue'}
+        keyboardType="numeric"
         style={[styles.TextInputStyle]}
         placeholder={placeholder} 
         />  

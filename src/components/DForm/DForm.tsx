@@ -85,7 +85,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
         .map( (question: question, index: number) => {
           switch( question.type ) {
             case 'textfield':
-              return <View style={styles.questionContainer}>
+              return <View key={index} style={styles.questionContainer}>
                       <DTextInput 
                         key={question.id}
                         title={question.title} 
@@ -100,7 +100,8 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
 
             case 'number':
-              return <View style={styles.questionContainer}><DNumberInput 
+              return <View key={index} style={styles.questionContainer}>
+                     <DNumberInput 
                         key={question.id}
                         title={question.title} 
                         index={index}
@@ -112,7 +113,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
             
             case 'toggle':
-              return <View style={styles.questionContainer}>
+              return <View key={index} style={styles.questionContainer}>
                      <DToggle 
                         key={question.id}
                         title={question.title} 
@@ -126,7 +127,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
 
             case 'checkbox':
-              return  <View style={styles.questionContainer}>
+              return  <View key={index} style={styles.questionContainer}>
                       <DCheckbox 
                         key={question.id}
                         title={question.title} 

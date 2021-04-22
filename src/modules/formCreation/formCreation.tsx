@@ -1,15 +1,23 @@
 import * as React from 'react';
-import { Alert, StyleSheet } from 'react-native';
+import { Alert, SafeAreaView, ScrollView, StatusBar, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import { Text, View } from '../../components/Themed/Themed';
-import { Container } from '@material-ui/core';
+import { bindActionCreators } from 'redux'
 import { useNavigation } from '@react-navigation/native';
-import Dropdown from 'react-dropdown';
 import DTextInput from '../../components/DTextInput';
 import DButton from '../../components/DButton';
 import Dialog from "react-native-dialog";
+import { createStore, applyMiddleware } from 'redux'
+import { connect } from 'react-redux';
+import actions from './actions';
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  scrollView: {
+    backgroundColor: 'white',
+  },
   ContainerStyle: {
     flex: 1,
     alignItems: 'stretch',
@@ -36,10 +44,33 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   questionContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    shadowOffset: { width: 4, height: 4},
+    shadowOpacity: 0.3,
+    borderColor: '#0B2940',
+    borderWidth: 1,
+    borderRadius: 3,
+    shadowRadius:6,
+    marginLeft: 20, 
+    marginRight: 20, 
+    marginTop: 10,
+    padding: 10 
+  },
+  specialText: {
+    fontSize: 60,
+    fontWeight: 'bold'
+  },
+  titleText: {
+
+  },
+  contentText: {
+
+  },
+  paddingContainer : { 
     paddingLeft: 20, 
     paddingRight: 20, 
-    paddingTop: 10
-  }
+    paddingTop: 10}
 });
 
 interface question {
@@ -72,7 +103,7 @@ const formCreation = (props) => {
   const [questions, setQuestion] = React.useState([] as any);
   const [titleValue, setTitleValue] = React.useState('');
   const [isValidated, setisValidated] = React.useState(true);
-  const [optionValue, setoptionValue] = React.useState('');
+  const [optionValue, setoptionValue] = React.useState('textfield');
   const [errorText, setErrorText] = React.useState('');
   const [visible, setVisible] = React.useState(false);
 
@@ -81,7 +112,6 @@ const formCreation = (props) => {
   };
 
   const handleForm = (index: string, value: string, isValidate: boolean) => {
-    console.log('awedaw', value);
     setTitleValue(value);
     setisValidated(isValidate);
   }
@@ -90,6 +120,12 @@ const formCreation = (props) => {
 
     if ( !isValidated ) {
       setErrorText('Please check if all mandatory fields are filled correctly!');
+      setVisible(true);
+      return ;
+    }
+
+    if ( questions.some( (question: question) => question.title.trim().toLocaleLowerCase() === titleValue.trim().toLocaleLowerCase())) {
+      setErrorText('You have duplicate title!');
       setVisible(true);
       return ;
     }
@@ -105,6 +141,10 @@ const formCreation = (props) => {
     setQuestion(result);
   };
 
+  React.useEffect( () => {
+    // setoptionValue('');
+  }, [questions])
+
   const clearList = () => {
     const result: question[] = [];
     setQuestion(result);
@@ -115,8 +155,10 @@ const formCreation = (props) => {
   };
 
   return (
-    <View style={styles.ContainerStyle}>
-      <View style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10}}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView style={styles.scrollView}>
+      <View style={styles.ContainerStyle}>
+      <View style={styles.paddingContainer}>
         <DTextInput 
           title={"Title"} 
           value={titleValue} 
@@ -132,7 +174,7 @@ const formCreation = (props) => {
         </Dialog.Description>
         <Dialog.Button label="Okay" onPress={handleCancel} />
       </Dialog.Container>
-      <View style={styles.questionContainer}>
+      <View style={styles.paddingContainer}>
         <Text style={styles.TextStyle}>Type(s) of Question</Text> 
         <Picker 
           selectedValue={optionValue} 
@@ -152,22 +194,42 @@ const formCreation = (props) => {
           <DButton title="Add" loading={false} onPress={ () => addItem()}/>
           </View>
       </View>
-
+      </View>
 
       {
         questions.map( (question: question, index: number) => {
           return (
           <View key={index} style={styles.questionContainer}>
-            <Text> {index + 1}.  {question.type} - {question.title} </Text>
+            <View style={{ marginRight: 10}}>
+              <Text style={styles.specialText}>{index + 1}</Text>
+            </View>
+            <View>
+              <View>
+                <Text style={{ fontSize: 18}}> Title : {question.title} </Text>
+              </View>
+              <View>
+                <Text style={{ fontSize: 18}}> Type : {question.type}  </Text>
+              </View>
+            </View>
           </View>)
         })
       }
       { (questions.length > 0) && <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton> } 
-      
-    </View>
-  );
+        
+      </ScrollView>
+    </SafeAreaView>
+    );
 }
 
+// const mapStateToProps = (state) => {
+//   return {
+//     question: state.questions
+//   }
+// }
 
+// const mapDispatchToProps = (dispatch) => {
+//   return bindActionCreators(actions, dispatch);
+// }
 
+// export default connect(mapStateToProps, mapDispatchToProps)(formCreation);
 export default formCreation;
