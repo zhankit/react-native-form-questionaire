@@ -112,7 +112,7 @@ const formCreation = (props) => {
       </Container>
 
       <Container style={{ paddingTop: "10px", display: 'inline-flex', placeContent: 'center'}}>
-        <DButton title="Clear" loading={false} onPress={ () => clearList()}></DButton>
+        <DButton title="Clear" type={'contrast'} loading={false} onPress={ () => clearList()}></DButton>
         <DButton title="Add" loading={false} onPress={ () => addItem()}></DButton>
       </Container>
 
