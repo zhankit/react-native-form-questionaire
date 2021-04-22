@@ -1,9 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, TextInput, Text, View, TextProps } from 'react-native'
 import PropTypes from 'prop-types';
-import { DButton, DNumberInput, DTextInput, DToggle } from '..';
-import DDropdown from '../DCheckbox';
 import DCheckbox from '../DCheckbox';
+import DTextInput from '../DTextInput';
+import DNumberInput from '../DNumberInput';
+import DToggle from '../DToggle';
+import DButton from '../DButton';
 
 const styles = StyleSheet.create({
   ContainerStyle: {
@@ -15,21 +17,24 @@ const styles = StyleSheet.create({
     fontWeight: "600"
   },
   TextInputStyle: {
-    color: 'black',
-    textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
-    borderColor: 'black',
-    borderWidth: 1,
-    marginTop: '3px',
-    paddingHorizontal: '10px',
-    height: '50px',
-    tintColor: 'black'
+    // color: 'black',
+    // textDecorationColor:'#3CAEA3',
+    // borderColor: 'black',
+    // borderWidth: 1,
+    // marginTop: '3px',
+    // paddingHorizontal: '10px',
+    // height: '50px',
   },
   titleTextStyle:{
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingHorizontal: '20px',
+    // fontSize: 20,
+    // fontWeight: 'bold',
+    // paddingHorizontal: '20px',
   },
+  questionContainer: {
+    paddingLeft: 20, 
+    paddingRight: 20, 
+    paddingTop: 10
+  }
 })
 
 interface DFormProps {
@@ -80,31 +85,35 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
         .map( (question: question, index: number) => {
           switch( question.type ) {
             case 'textfield':
-              return <DTextInput 
-                      key={question.id}
-                      title={question.title} 
-                      index={index}
-                      value={""}
-                      required={question.required ? true : false}
-                      onFormUpdate={handleForm}
-                      validator={question.validator}
-                      validatorMessage={question.validatorMsg}
-                      />;
-              break;
-
-            case 'number':
-              return <DNumberInput 
+              return <View style={styles.questionContainer}>
+                      <DTextInput 
                         key={question.id}
                         title={question.title} 
                         index={index}
                         value={""}
                         required={question.required ? true : false}
                         onFormUpdate={handleForm}
-                        />;
+                        validator={question.validator}
+                        validatorMessage={question.validatorMsg}
+                        />
+                      </View>;
+              break;
+
+            case 'number':
+              return <View style={styles.questionContainer}><DNumberInput 
+                        key={question.id}
+                        title={question.title} 
+                        index={index}
+                        value={""}
+                        required={question.required ? true : false}
+                        onFormUpdate={handleForm}
+                        />
+                        </View>;
               break;
             
             case 'toggle':
-              return <DToggle 
+              return <View style={styles.questionContainer}>
+                     <DToggle 
                         key={question.id}
                         title={question.title} 
                         index={index}
@@ -112,11 +121,13 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
                         onFormUpdate={handleForm}
                         validator={question.validator}
                         validatorMessage={question.validatorMsg}
-                        />;
+                        />
+                        </View>;
               break;
 
             case 'checkbox':
-              return <DCheckbox 
+              return  <View style={styles.questionContainer}>
+                      <DCheckbox 
                         key={question.id}
                         title={question.title} 
                         index={index}
@@ -124,7 +135,8 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
                         onFormUpdate={handleForm}
                         validator={question.validator}
                         validatorMessage={question.validatorMsg}
-                       />;
+                       />
+                       </View>;
               break;
           }
       })}

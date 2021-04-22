@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { Alert, StyleSheet } from 'react-native';
-import { DButton, DDropdown, DTextInput } from '../../components';
+import { Picker } from '@react-native-community/picker';
 import { Text, View } from '../../components/Themed/Themed';
 import { Container } from '@material-ui/core';
 import { useNavigation } from '@react-navigation/native';
 import Dropdown from 'react-dropdown';
-import CardView from 'react-native-cardview'
-import './formCreation.css';
+import DTextInput from '../../components/DTextInput';
+import DButton from '../../components/DButton';
+import Dialog from "react-native-dialog";
 
 const styles = StyleSheet.create({
   ContainerStyle: {
@@ -24,8 +25,21 @@ const styles = StyleSheet.create({
   separator: {
     marginVertical: 30,
     height: 1,
-    width: '80%',
   },
+  buttonContainer: {
+    // flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  subbuttonContainer: {
+    flex: 1,
+  },
+  questionContainer: {
+    paddingLeft: 20, 
+    paddingRight: 20, 
+    paddingTop: 10
+  }
 });
 
 interface question {
@@ -45,6 +59,7 @@ interface option {
   value: string
 }
 
+
 const formCreation = (props) => {
 
   const navigation = useNavigation();
@@ -54,12 +69,19 @@ const formCreation = (props) => {
     { label: 'Toggle', value: 'toggle'},
     { label: 'Checkbox', value: 'checkbox'}
   ];
-  const[questions, setQuestion] = React.useState([] as any);
-  const[titleValue, setTitleValue] = React.useState('');
-  const[isValidated, setisValidated] = React.useState(true);
-  const[optionValue, setoptionValue] = React.useState(options[0]);
+  const [questions, setQuestion] = React.useState([] as any);
+  const [titleValue, setTitleValue] = React.useState('');
+  const [isValidated, setisValidated] = React.useState(true);
+  const [optionValue, setoptionValue] = React.useState('');
+  const [errorText, setErrorText] = React.useState('');
+  const [visible, setVisible] = React.useState(false);
+
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   const handleForm = (index: string, value: string, isValidate: boolean) => {
+    console.log('awedaw', value);
     setTitleValue(value);
     setisValidated(isValidate);
   }
@@ -67,25 +89,25 @@ const formCreation = (props) => {
   const addItem = () => {
 
     if ( !isValidated ) {
-      return "SMTH";
+      setErrorText('Please check if all mandatory fields are filled correctly!');
+      setVisible(true);
+      return ;
     }
     const question: question = {
       id: titleValue,
       order: questions.length,
-      type: optionValue.value,
+      type: optionValue,
       title: titleValue,
       value: "",
       required: true,
     }
     const result: question[] = [...questions, question];
     setQuestion(result);
-    setoptionValue(options[0]);
   };
 
   const clearList = () => {
     const result: question[] = [];
     setQuestion(result);
-    setoptionValue(options[0]);
   };
 
   const confirmList = () => {
@@ -94,40 +116,54 @@ const formCreation = (props) => {
 
   return (
     <View style={styles.ContainerStyle}>
-      <DTextInput 
-        title={"Title"} 
-        value={titleValue} 
-        onFormUpdate={handleForm}
-        validator={ (value: string) => { const letters = new RegExp('^[a-zA-Z0-9 ]+$'); return String(value).length > 0 && letters.test(value) }}
-        validatorMessage={"Field must be not empty or contains special symbol"}
-      />
-
-      <Container style={{ paddingLeft: "20px", paddingRight: "20px", paddingTop: "10px"}}>
+      <View style={{ paddingLeft: 20, paddingRight: 20, paddingTop: 10}}>
+        <DTextInput 
+          title={"Title"} 
+          value={titleValue} 
+          onFormUpdate={handleForm}
+          validator={ (value: string) => { const letters = new RegExp('^[a-zA-Z0-9 ]+$'); return String(value).length > 0 && letters.test(value) }}
+          validatorMessage={"Field must be not empty or contains special symbol"}
+        /> 
+      </View>
+      <Dialog.Container visible={visible}>
+        <Dialog.Title>Error</Dialog.Title>
+        <Dialog.Description>
+          {errorText}
+        </Dialog.Description>
+        <Dialog.Button label="Okay" onPress={handleCancel} />
+      </Dialog.Container>
+      <View style={styles.questionContainer}>
         <Text style={styles.TextStyle}>Type(s) of Question</Text> 
-        <Dropdown 
-          options={options} 
-          value={optionValue.value} 
-          onChange={ (args) => { setoptionValue(args);}} 
-          placeholder="Select an option" />
-      </Container>
-
-      <Container style={{ paddingTop: "10px", display: 'inline-flex', placeContent: 'center'}}>
-        <DButton title="Clear" type={'contrast'} loading={false} onPress={ () => clearList()}></DButton>
-        <DButton title="Add" loading={false} onPress={ () => addItem()}></DButton>
-      </Container>
+        <Picker 
+          selectedValue={optionValue} 
+          onValueChange={ (itemValue, itemIndex) => { setoptionValue(itemValue);}} 
+          >
+          <Picker.Item label="Textfield" value="textfield" />
+          <Picker.Item label="Number" value="number" />
+          <Picker.Item label="Toggle" value="toggle" />
+          <Picker.Item label="Checkbox" value="checkbox" />
+          </Picker>
+      </View>
+      <View style={styles.buttonContainer}>
+        <View style={styles.subbuttonContainer}>
+          <DButton title="Clear" type={'contrast'} loading={false} onPress={ () => clearList()} />
+        </View>
+        <View style={styles.subbuttonContainer}>
+          <DButton title="Add" loading={false} onPress={ () => addItem()}/>
+          </View>
+      </View>
 
 
       {
         questions.map( (question: question, index: number) => {
           return (
-          
-          <Container style={{ paddingLeft: "20px", paddingRight: "20px", paddingTop: "10px", boxShadow: '20'}}>
+          <View key={index} style={styles.questionContainer}>
             <Text> {index + 1}.  {question.type} - {question.title} </Text>
-          </Container>)
+          </View>)
         })
       }
       { (questions.length > 0) && <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton> } 
-
+      
     </View>
   );
 }

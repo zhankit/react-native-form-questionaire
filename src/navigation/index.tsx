@@ -3,6 +3,7 @@ import { ColorSchemeName, StyleSheet} from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import LinkingConfiguration from './LinkingConfiguration';
+import { useNavigation } from '@react-navigation/native';
 
 import HomeScreen from '../modules/home';
 import form from '../modules/form';
@@ -29,7 +30,6 @@ const Navigation = ( props: NavigationProps ) => {
 
   return (
   <NavigationContainer
-    linking={LinkingConfiguration}
     theme={props.colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
   <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomeScreen} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Home' }}/>
@@ -37,7 +37,7 @@ const Navigation = ( props: NavigationProps ) => {
       <Stack.Screen name="formCreation" component={formCreation} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Form Creation' }}/>
     </Stack.Navigator>
   </NavigationContainer>
-);
+  );
 }
 
 export default Navigation;

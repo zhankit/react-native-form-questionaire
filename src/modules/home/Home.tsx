@@ -8,8 +8,8 @@ const styles = StyleSheet.create({
   container: { 
     fontWeight: 'bold', 
     fontSize: 30,
-    paddingLeft: '20px',
-    paddingRight: '20px',
+    paddingLeft: 20,
+    paddingRight: 20,
   },
   mainContainer: {
     flex: 1,
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   logo: {
-    width: '200px',
-    height: '200px'
+    width: 200,
+    height: 200
   },
   title: {
     fontSize: 20,
@@ -32,12 +32,12 @@ interface HomeScreenProps {
 
 const HomeScreen = (props: HomeScreenProps) => {
   const navigation = useNavigation();
-  const logoIcon = require('../../assets/images/loader.gif');
+  const logoIcon =  require('../../assets/images/loader.gif');
 
   return (
   <View style={styles.mainContainer}>
     <Text style={styles.container}>Welcome to the demo of Dynamic React-Forms Component!</Text>
-    <Image source={{ uri: logoIcon}} style={styles.logo} />
+    <Image source={logoIcon} style={styles.logo} />
     <DButton style={{backgroundColor : 'black'}} title="Start" loading={false} onPress={ () => navigation.navigate('formCreation')}></DButton>
   </View>
   );

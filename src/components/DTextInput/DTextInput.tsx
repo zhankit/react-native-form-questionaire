@@ -5,39 +5,24 @@ import { colors } from '@material-ui/core';
 
 const styles = StyleSheet.create({
   ContainerStyle: {
-    color: 'black',
-    // overlayColor: 'black',
-    
-    textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
-    marginHorizontal: '20px',
-    marginTop: '10px',
-    height: '70px',
   },
   TextStyle:{
     fontWeight: "600"
   },
   TextInputStyle: {
-    color: 'black',
-    // overlayColor: 'black',
-    
+    color: 'black',    
     textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
     borderColor: 'black',
     borderWidth: 1,
-    marginTop: '3px',
-    paddingHorizontal: '10px',
-    height: '50px',
-    tintColor: 'black'
   },
 })
 
 interface DTextInputProps {
   id: string;
-  index: number;
+  index?: number;
   title: string;
   value: string;
-  required: boolean;
+  required?: boolean;
   onFormUpdate: Function;
   validator: Function;
   validatorMessage?: string;
@@ -61,11 +46,10 @@ const DTextInput = (props: DTextInputProps) =>  {
   return(
     <View style={styles.ContainerStyle}>
       <Text style={styles.TextStyle}>{title}{ required? <Text style={{color : '#e00000'}}> *</Text>: ''} </Text> 
-    
       <TextInput 
         key={id}
         value={textValue}
-        onChange={(e) => { setTextValue(e.target.value)}}
+        onChangeText={(text) => { setTextValue(text)}}
         selectionColor={'blue'}
         style={[styles.TextInputStyle]}
         placeholder={placeholder} 
@@ -84,6 +68,7 @@ DTextInput.propTypes = {
 
 DTextInput.defaultProps = {
   required: true,
+  index: -1,
   validator: (value: any) => { return String(value).length > 0 },
   validatorMessage: 'Fields Must be filled'
 };

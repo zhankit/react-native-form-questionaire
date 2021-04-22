@@ -1,16 +1,19 @@
 import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native'
 import PropTypes from 'prop-types';
-import { Container } from '@material-ui/core';
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    paddingLeft: 20,
+    paddingRight: 20,
+  },
   btnContainerStyle: {
     borderRadius: 10,
     justifyContent: "center",
     backgroundColor: '#1463A9',
-    marginTop: '15px',
-    marginBottom: '5px',
-    height: '50px',
+    marginTop: 15,
+    marginBottom: 5,
+    height: 50,
   },
   btnTextStyle: {
     color: 'white',
@@ -26,9 +29,9 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#1463A9',
     backgroundColor: 'white',
-    marginTop: '15px',
-    marginBottom: '5px',
-    height: '50px',
+    marginTop: 15,
+    marginBottom: 5,
+    height: 50,
   },
   contrastBtnTextStyle: {
     color: '#1463A9',
@@ -51,7 +54,7 @@ interface DButtonProps {
 const DButton = ( props: DButtonProps) => {
   const { title, type, loading, onPress, style, ...rest } = props;
   return (
-    <Container>
+    <View style={styles.mainContainer}>
       <TouchableOpacity onPress={onPress}>
         { type == 'regular' && <View style={(styles.btnContainerStyle)}>
           <Text style={styles.btnTextStyle}> {title} </Text>
@@ -60,7 +63,7 @@ const DButton = ( props: DButtonProps) => {
           <Text style={styles.contrastBtnTextStyle}> {title} </Text>
         </View>}
       </TouchableOpacity>
-    </Container>
+    </View>
     
   )
 }

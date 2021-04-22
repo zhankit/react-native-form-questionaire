@@ -5,30 +5,15 @@ import { colors } from '@material-ui/core';
 
 const styles = StyleSheet.create({
   ContainerStyle: {
-    color: 'black',
-    // overlayColor: 'black',
-    
-    textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
-    marginHorizontal: '20px',
-    marginTop: '10px',
-    height: '70px',
   },
   TextStyle:{
     fontWeight: "600"
   },
   TextInputStyle: {
-    color: 'black',
-    // overlayColor: 'black',
-    
+    color: 'black',    
     textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
     borderColor: 'black',
     borderWidth: 1,
-    marginTop: '3px',
-    paddingHorizontal: '10px',
-    height: '50px',
-    tintColor: 'black'
   },
 })
 
@@ -64,7 +49,7 @@ const DNumberInput = (props: DNumberInputProps) =>  {
     
       <TextInput 
         value={textValue}
-        onChange={(e) => setTextValue(e.target.value)}
+        onChangeText={(text) => { setTextValue(text)}}
         selectionColor={'blue'}
         style={[styles.TextInputStyle]}
         placeholder={placeholder} 

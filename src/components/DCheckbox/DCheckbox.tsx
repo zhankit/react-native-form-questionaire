@@ -7,28 +7,16 @@ import { Checkbox } from 'react-native-paper';
 const styles = StyleSheet.create({
   ContainerStyle: {
     flexDirection: 'row',
-    color: 'black',
-    // overlayColor: 'black',
-    textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
-    marginHorizontal: '20px',
-    marginTop: '10px',
-    height: '70px',
+    // color: 'black',
+    // textDecorationColor:'#3CAEA3',
+    // marginHorizontal: '20px',
+    // marginTop: '10px',
+    // height: '70px',
   },
   TextStyle:{
     fontWeight: "600"
   },
   TextInputStyle: {
-    color: 'black',
-    // overlayColor: 'black',
-    textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
-    borderColor: 'black',
-    borderWidth: 1,
-    marginTop: '3px',
-    paddingHorizontal: '10px',
-    height: '50px',
-    tintColor: 'black'
   },
 })
 
@@ -36,7 +24,7 @@ interface DCheckboxProps {
   id: string;
   index: number;
   title: string;
-  value: any;
+  value: boolean;
   required: boolean;
   onFormUpdate: Function;
   validator: Function;

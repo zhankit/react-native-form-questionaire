@@ -1,37 +1,31 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput, Text, View } from 'react-native'
+import { StyleSheet, TextInput, Text, View, Switch } from 'react-native'
 import PropTypes from 'prop-types';
 import { colors } from '@material-ui/core';
 import Toggle from 'react-toggle';
-import './style.css' // for ES6 modules
+// import './style.css' // for ES6 modules
 
 const styles = StyleSheet.create({
   ContainerStyle: {
     flexDirection: 'row',
     color: 'black',
-    // overlayColor: 'black',
     textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
-    marginHorizontal: '20px',
-    marginTop: '10px',
-    height: '70px',
+    // marginHorizontal: '20px',
+    // marginTop: '10px',
+    // height: '70px',
   },
   TextStyle:{
-    marginLeft: '20px',
-    fontWeight: "600"
+    // marginLeft: '20px',
+    // fontWeight: "600"
   },
   TextInputStyle: {
-    color: 'black',
-    // overlayColor: 'black',
-    
+    color: 'black',    
     textDecorationColor:'#3CAEA3',
-    overlayColor: 'blue',
     borderColor: 'black',
     borderWidth: 1,
-    marginTop: '3px',
-    paddingHorizontal: '10px',
-    height: '50px',
-    tintColor: 'black'
+    // marginTop: '3px',
+    // paddingHorizontal: '10px',
+    // height: '50px',
   },
 })
 
@@ -63,10 +57,12 @@ const DToggle = (props: DToggleProps) =>  {
   
   return(
     <View style={styles.ContainerStyle}>
-      <Toggle 
-        defaultChecked={toggleValue}
-        name={id}
-        onChange={() => settoggleValue(!toggleValue)}
+      <Switch 
+        trackColor={{ false: "#767577", true: "#81b0ff" }}
+        thumbColor={toggleValue ? "#f5dd4b" : "#f4f3f4"}
+        ios_backgroundColor="#3e3e3e"
+        value={toggleValue}
+        onValueChange={() => settoggleValue(!toggleValue)}
         />  
       <Text style={styles.TextStyle}>{title}</Text> 
     </View>    
