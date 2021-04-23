@@ -1,6 +1,6 @@
 
 <p align="center">
-  <h1 align="center">react native form questionaire</h1>
+  <h1 align="center">React Native Dynamic Form Questionaire</h1>
 </p>
 
   
