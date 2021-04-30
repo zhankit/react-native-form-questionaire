@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
     textDecorationColor:'#3CAEA3',
     borderColor: 'black',
     borderWidth: 1,
-  },
+    height: 40,
+  }
 })
 
 interface DTextInputProps {

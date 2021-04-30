@@ -5,9 +5,9 @@ import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/
 import LinkingConfiguration from './LinkingConfiguration';
 import { useNavigation } from '@react-navigation/native';
 
-import HomeScreen from '../modules/home';
-import form from '../modules/form';
-import formCreation from '../modules/formCreation';
+import HomeScreen from '../screens/home';
+import form from '../screens/form';
+import formCreation from '../screens/formCreation';
 
 const styles= StyleSheet.create({
   headerTextStyle: {
@@ -22,6 +22,15 @@ interface NavigationProps {
   colorScheme: ColorSchemeName
 }
 
+const MyTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    card:  '#f4eee8',
+  },
+};
+
+
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 const Navigation = ( props: NavigationProps ) => {
@@ -29,12 +38,25 @@ const Navigation = ( props: NavigationProps ) => {
   const Stack = createStackNavigator();
 
   return (
-  <NavigationContainer
-    theme={props.colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-  <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Home' }}/>
-      <Stack.Screen name="form" component={form} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Customized Form' }}/>
-      <Stack.Screen name="formCreation" component={formCreation} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Form Creation' }}/>
+  <NavigationContainer theme={MyTheme}>
+  <Stack.Navigator 
+    initialRouteName="Home" 
+    screenOptions={{
+      headerBackTitleVisible: false,
+      headerTintColor: 'black',
+    }}>
+      <Stack.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{ headerTitleStyle: styles.headerTextStyle, title: 'Home' }}/>
+      <Stack.Screen 
+        name="form" 
+        component={form} 
+        options={{ headerTitleStyle: styles.headerTextStyle, title: '' }}/>
+      <Stack.Screen 
+        name="formCreation" 
+        component={formCreation}
+         options={{ headerTitleStyle: styles.headerTextStyle, title: '' }}/>
     </Stack.Navigator>
   </NavigationContainer>
   );

@@ -10,13 +10,19 @@ import Dialog from "react-native-dialog";
 import { createStore, applyMiddleware } from 'redux'
 import { connect } from 'react-redux';
 import actions from './actions';
+import DropDownPicker from 'react-native-dropdown-picker';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#f4eee8'
   },
   scrollView: {
-    backgroundColor: 'white',
+    borderTopLeftRadius: 80,
+    marginTop: 15,
+    marginLeft: 10,
+    zIndex: 1,
+    backgroundColor: '#252a34'
   },
   ContainerStyle: {
     flex: 1,
@@ -35,13 +41,10 @@ const styles = StyleSheet.create({
     height: 1,
   },
   buttonContainer: {
-    // flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  subbuttonContainer: {
-    flex: 1,
+    marginLeft: 10,
+    paddingBottom: 10,
+    borderBottomLeftRadius: 20,
+    backgroundColor: '#252a34',
   },
   questionContainer: {
     flexDirection: 'row',
@@ -61,13 +64,8 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold'
   },
-  titleText: {
-
-  },
-  contentText: {
-
-  },
   paddingContainer : { 
+    position: 'relative',
     paddingLeft: 20, 
     paddingRight: 20, 
     paddingTop: 10}
@@ -156,47 +154,58 @@ const formCreation = (props) => {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView style={styles.scrollView}>
-      <View style={styles.ContainerStyle}>
-      <View style={styles.paddingContainer}>
-        <DTextInput 
-          title={"Title"} 
-          value={titleValue} 
-          onFormUpdate={handleForm}
-          validator={ (value: string) => { const letters = new RegExp('^[a-zA-Z0-9 ]+$'); return String(value).length > 0 && letters.test(value) }}
-          validatorMessage={"Field must be not empty or contains special symbol"}
-        /> 
-      </View>
-      <Dialog.Container visible={visible}>
-        <Dialog.Title>Error</Dialog.Title>
-        <Dialog.Description>
-          {errorText}
-        </Dialog.Description>
-        <Dialog.Button label="Okay" onPress={handleCancel} />
-      </Dialog.Container>
-      <View style={styles.paddingContainer}>
-        <Text style={styles.TextStyle}>Type(s) of Question</Text> 
-        <Picker 
-          selectedValue={optionValue} 
-          onValueChange={ (itemValue, itemIndex) => { setoptionValue(itemValue);}} 
-          >
-          <Picker.Item label="Textfield" value="textfield" />
-          <Picker.Item label="Number" value="number" />
-          <Picker.Item label="Toggle" value="toggle" />
-          <Picker.Item label="Checkbox" value="checkbox" />
-          </Picker>
-      </View>
-      <View style={styles.buttonContainer}>
-        <View style={styles.subbuttonContainer}>
-          <DButton title="Clear" type={'contrast'} loading={false} onPress={ () => clearList()} />
+      <View style={{backgroundColor: '#f4eee8'}}>
+        <View style={{ paddingTop: 20, paddingHorizontal: 20, backgroundColor: '#f4eee8'}}>
+          <Text style={{ fontWeight: "bold", fontSize: 30}}>Creating Dynamic Form </Text>
         </View>
+        <View style={{ paddingHorizontal: 20, backgroundColor: '#f4eee8'}}>
+          <Text style={{ fontWeight: "400", fontSize: 20, textAlign: 'justify'}}>This simple dynamic form is useful where you can create the new forms on the fly without changing the application code.</Text>
+        </View>
+      </View>
+      
+      <ScrollView style={styles.scrollView}>
+      {/* <View style={styles.ContainerStyle}>
+        <View style={styles.paddingContainer}>
+          <DTextInput 
+            title={"Title"} 
+            value={titleValue} 
+            onFormUpdate={handleForm}
+            validator={ (value: string) => { const letters = new RegExp('^[a-zA-Z0-9 ]+$'); return String(value).length > 0 && letters.test(value) }}
+            validatorMessage={"Field must be not empty or contains special symbol"}
+          /> 
+        </View>
+        <Dialog.Container visible={visible}>
+          <Dialog.Title>Error</Dialog.Title>
+          <Dialog.Description>
+            {errorText}
+          </Dialog.Description>
+          <Dialog.Button label="Okay" onPress={handleCancel} />
+        </Dialog.Container>
+        <View style={styles.paddingContainer}>
+          <Text style={styles.TextStyle}>Type(s) of Question</Text> 
+          <DropDownPicker 
+            items={[
+              {label: 'Textfield', value: 'textfield' },
+              {label: 'Number', value: 'number' },
+              {label: 'Toggle', value: 'toggle' },
+              {label: 'Checkbox', value: 'checkbox' },
+            ]}
+            // defaultValue={{label: 'Textfield', value: 'textfield' }} 
+            containerStyle={{height: 40}}
+            onChangeItem={ (itemValue) => { setoptionValue(itemValue.value);}} 
+            />
+        </View>
+        <View style={styles.buttonContainer}>
         <View style={styles.subbuttonContainer}>
-          <DButton title="Add" loading={false} onPress={ () => addItem()}/>
-          </View>
+          <DButton leftTitle="1" title="REVIEW" loading={false} onPress={ () => addItem()}/>
+        </View>
       </View>
+      </View> */}
+      </ScrollView>
+      <View style={styles.buttonContainer}>
+          <DButton leftTitle="1" title="REVIEW" loading={false} onPress={ () => addItem()}/>
       </View>
-
-      {
+      {/* {
         questions.map( (question: question, index: number) => {
           return (
           <View key={index} style={styles.questionContainer}>
@@ -214,9 +223,8 @@ const formCreation = (props) => {
           </View>)
         })
       }
-      { (questions.length > 0) && <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton> } 
+      { (questions.length > 0) && <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton> }  */}
         
-      </ScrollView>
     </SafeAreaView>
     );
 }

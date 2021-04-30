@@ -13,8 +13,9 @@ const styles = StyleSheet.create({
   },
   mainContainer: {
     flex: 1,
-    alignItems: 'stretch',
+    alignContent: 'center',
     justifyContent: 'center',
+    backgroundColor: '#f4eee8'
   },
   logo: {
     width: 200,
@@ -37,8 +38,7 @@ const HomeScreen = (props: HomeScreenProps) => {
   return (
   <View style={styles.mainContainer}>
     <Text style={styles.container}>Welcome to the demo of Dynamic React-Forms Component!</Text>
-    <Image source={logoIcon} style={styles.logo} />
-    <DButton style={{backgroundColor : 'black'}} title="Start" loading={false} onPress={ () => navigation.navigate('formCreation')}></DButton>
+    <DButton style={{backgroundColor : 'black'}} title="Start" loading={false} type={'contrast'} onPress={ () => navigation.navigate('formCreation')}></DButton>
   </View>
   );
 }

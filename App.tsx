@@ -1,15 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import Navigation from './src/navigation';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
 import useCachedResources from './src/assets/hooks/useCachedResources';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider, connect } from 'react-redux';
+import { SafeAreaView, useColorScheme } from 'react-native';
 // import { store } from './src/redux/store/store';
 
 const App = () => {
 
-  // const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
   const Stack = createStackNavigator();   
   if (!isLoadingComplete) {
@@ -17,12 +18,12 @@ const App = () => {
   } 
   else {
       return (
-      // <Provider store={store}>
-        <PaperProvider>
-         <Navigation colorScheme={null} />
-         <StatusBar />
-        </PaperProvider>
-      // </Provider>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#f4eee8'}}>
+          <PaperProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar backgroundColor="black"/>
+          </PaperProvider>
+        </SafeAreaView>
     );
   }
 }
