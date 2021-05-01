@@ -15,6 +15,7 @@ export default function useCachedResources() {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
+          'roboto': require('../fonts/RobotoMono-Regular.ttf'),
           'space-mono': require('../fonts/SpaceMono-Regular.ttf'),
           'sansita': require('../fonts/SansitaSwashed-VariableFont_wght.ttf'),
           'lobster': require('../fonts/Lobster-Regular.ttf'),

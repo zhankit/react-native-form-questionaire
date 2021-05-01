@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { StyleSheet, TextInput, Text, View, Switch } from 'react-native'
 import PropTypes from 'prop-types';
 import { colors } from '@material-ui/core';
-import Toggle from 'react-toggle';
 // import './style.css' // for ES6 modules
 
 const styles = StyleSheet.create({

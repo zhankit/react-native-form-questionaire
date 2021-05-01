@@ -14,6 +14,7 @@ const styles = StyleSheet.create({
     textDecorationColor:'#3CAEA3',
     borderColor: 'black',
     borderWidth: 1,
+    height: 40,
   },
 })
 
@@ -51,6 +52,7 @@ const DNumberInput = (props: DNumberInputProps) =>  {
         value={textValue}
         onChangeText={(text) => { setTextValue(text)}}
         selectionColor={'blue'}
+        keyboardType="numeric"
         style={[styles.TextInputStyle]}
         placeholder={placeholder} 
         />  

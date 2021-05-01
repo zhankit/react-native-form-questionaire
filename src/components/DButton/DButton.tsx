@@ -1,21 +1,31 @@
 import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native'
 import PropTypes from 'prop-types';
+import { useTheme  } from 'react-native-paper';
+import { ButtonProps } from '@material-ui/core';
 
 const styles = StyleSheet.create({
   mainContainer: {
     paddingLeft: 20,
     paddingRight: 20,
   },
-  btnContainerStyle: {
-    borderRadius: 10,
-    justifyContent: "center",
-    backgroundColor: '#1463A9',
-    marginTop: 15,
-    marginBottom: 5,
-    height: 50,
-  },
   btnTextStyle: {
+    color: '#252a34',
+    fontSize: 16,
+    textTransform: 'uppercase',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    alignContent: 'center'
+  },
+  buttonContainerStyle: {
+    borderRadius: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    height: 50,
+    display: 'flex'
+  },
+  contrastBtnTextStyle: {
     color: 'white',
     fontSize: 16,
     textTransform: 'uppercase',
@@ -23,45 +33,47 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignContent: 'center'
   },
-  contrastBtnContainerStyle: {
-    borderRadius: 10,
-    justifyContent: "center",
-    borderWidth: 2,
-    borderColor: '#1463A9',
-    backgroundColor: 'white',
-    marginTop: 15,
-    marginBottom: 5,
-    height: 50,
+  leftButtonStyle : {
+    flex: 1
   },
-  contrastBtnTextStyle: {
-    color: '#1463A9',
-    fontSize: 16,
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    alignContent: 'center'
+  titleButtonStyle : {
+    flex: 1
   },
+  rightButtonStyle : {
+    flex: 1
+  }
 })
 
 interface DButtonProps {
   title: string;
+  leftTitle: string;
+  rightTitle: string;
   loading: boolean;
   type?: string;
-  style?: any;
+  isDisabled: boolean;
+  style?: ButtonProps;
   onPress: (event: GestureResponderEvent) => void
 }
 
+
 const DButton = ( props: DButtonProps) => {
-  const { title, type, loading, onPress, style, ...rest } = props;
+  const { colors } = useTheme();
+  const { title, leftTitle, rightTitle, isDisabled, type, loading, onPress, style, ...rest } = props;
+
   return (
     <View style={styles.mainContainer}>
-      <TouchableOpacity onPress={onPress}>
-        { type == 'regular' && <View style={(styles.btnContainerStyle)}>
-          <Text style={styles.btnTextStyle}> {title} </Text>
-        </View>}
-        { type == 'contrast' && <View style={(styles.contrastBtnContainerStyle)}>
-          <Text style={styles.contrastBtnTextStyle}> {title} </Text>
-        </View>}
+      <TouchableOpacity onPress={onPress} disabled={isDisabled}>
+        <View style={{...styles.buttonContainerStyle, ...{backgroundColor: colors.accent}}}>
+          <View style={styles.leftButtonStyle}>
+           <Text style={styles.contrastBtnTextStyle}> {leftTitle} </Text>
+          </View>
+          <View style={styles.titleButtonStyle}>
+            <Text style={styles.contrastBtnTextStyle}> {title} </Text>
+          </View>
+          <View style={styles.rightButtonStyle}>
+            <Text style={styles.contrastBtnTextStyle}> {rightTitle} </Text>
+          </View>
+        </View>
       </TouchableOpacity>
     </View>
     

@@ -1,16 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View, useColorScheme } from 'react-native';
 import Navigation from './src/navigation';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme as PaperDarkTheme, Provider as PaperProvider } from 'react-native-paper';
+import { DefaultTheme as NavigationDarkTheme} from '@react-navigation/native';
 import useCachedResources from './src/assets/hooks/useCachedResources';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './src/modules/home';
+import { Provider, connect } from 'react-redux';
+import { SafeAreaView, useColorScheme } from 'react-native';
+import merge from 'deepmerge';
+// import { store } from './src/redux/store/store';
+
+const MyPaperDarkTheme = {
+  ...PaperDarkTheme,
+  colors: {
+    ...PaperDarkTheme.colors,
+    primary: '#abe9ff',
+    text: 'black',
+  },
+};
+// primary: '#252a34',
+
+const MyNavigationDarkTheme = {
+  ...NavigationDarkTheme,
+  colors: {
+    ...NavigationDarkTheme.colors,
+    primary: '#abe9ff',
+    text: 'black',
+    accent: '#233c45'
+  },
+};
+
+const CombinedDefaultTheme = merge(MyPaperDarkTheme, MyNavigationDarkTheme);
 
 const App = () => {
 
-  // const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
   const Stack = createStackNavigator();   
   if (!isLoadingComplete) {
@@ -18,17 +42,10 @@ const App = () => {
   } 
   else {
       return (
-      // <Provider store={store}>
-      // <NavigationContainer>
-      //   <Stack.Navigator>
-      //     <Stack.Screen name="walao" component={HomeScreen}></Stack.Screen>
-      //   </Stack.Navigator>
-      // </NavigationContainer>
-        <PaperProvider>
-         <Navigation colorScheme={null} />
-         <StatusBar />
+        <PaperProvider theme={CombinedDefaultTheme}>
+          <Navigation theme={CombinedDefaultTheme}/>
+          <StatusBar  backgroundColor={CombinedDefaultTheme.colors.primary} translucent={true}/>
         </PaperProvider>
-      // </Provider>
     );
   }
 }

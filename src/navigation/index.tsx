@@ -1,25 +1,34 @@
 import * as React from 'react';
 import { ColorSchemeName, StyleSheet} from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import LinkingConfiguration from './LinkingConfiguration';
 import { useNavigation } from '@react-navigation/native';
 
-import HomeScreen from '../modules/home';
-import form from '../modules/form';
-import formCreation from '../modules/formCreation';
+import HomeScreen from '../screens/home';
+import form from '../screens/form';
+import formCreation from '../screens/formCreation';
+import { Theme } from 'react-native-paper/lib/typescript/types';
+import { color } from 'react-native-reanimated';
+import componentCreation from '../screens/textfieldForm';
+import textfieldForm from '../screens/textfieldForm';
+import numberfieldForm from '../screens/numberfieldForm';
+import toggleFieldForm from '../screens/toggleFieldForm';
+import checkboxForm from '../screens/checkboxForm';
 
 const styles= StyleSheet.create({
   headerTextStyle: {
     fontWeight: "bold", 
     fontFamily: "lobster", 
     fontSize: 28,
-    letterSpacing:1
+    letterSpacing: 1,
+    color: 'black'
   }
-})
+});
+
 // This is the state mapping
 interface NavigationProps {
-  colorScheme: ColorSchemeName
+  theme: Theme
 }
 
 // If you are not familiar with React Navigation, we recommend going through the
@@ -29,12 +38,43 @@ const Navigation = ( props: NavigationProps ) => {
   const Stack = createStackNavigator();
 
   return (
-  <NavigationContainer
-    theme={props.colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-  <Stack.Navigator initialRouteName="Home">
-      <Stack.Screen name="Home" component={HomeScreen} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Home' }}/>
-      <Stack.Screen name="form" component={form} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Customized Form' }}/>
-      <Stack.Screen name="formCreation" component={formCreation} options={{ headerTitleStyle: styles.headerTextStyle, title: 'Form Creation' }}/>
+  <NavigationContainer theme={props.theme}>
+    <Stack.Navigator 
+      initialRouteName="Home" 
+      screenOptions={{
+        headerBackTitleVisible: false,
+        headerTintColor: props.theme.colors.text,
+        headerStyle: { backgroundColor: props.theme.colors.primary},
+        headerTitleStyle : styles.headerTextStyle
+      }}>
+      <Stack.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{ title: 'Home' }}/>
+      <Stack.Screen 
+        name="form" 
+        component={form} 
+        options={{ title: '' }}/>
+      <Stack.Screen 
+        name="formCreation" 
+        component={formCreation}
+         options={{ title: 'Dynamic Form' }}/>
+      <Stack.Screen 
+        name="textfieldForm" 
+        component={textfieldForm}
+         options={{ title: '' }}/>
+      <Stack.Screen 
+        name="numberfieldForm" 
+        component={numberfieldForm}
+         options={{ title: '' }}/>
+      <Stack.Screen 
+        name="toggleFieldForm" 
+        component={toggleFieldForm}
+         options={{ title: '' }}/>
+      <Stack.Screen 
+        name="checkboxForm" 
+        component={checkboxForm}
+         options={{ title: '' }}/>
     </Stack.Navigator>
   </NavigationContainer>
   );
