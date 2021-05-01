@@ -2,6 +2,7 @@ import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native'
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { useTheme  } from 'react-native-paper';
 import { ButtonProps } from '@material-ui/core';
 
 const styles = StyleSheet.create({
@@ -32,15 +33,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 2,
-    borderColor: '#252a34',
-    backgroundColor: '#252a34',
     marginTop: 15,
     marginBottom: 5,
     height: 50,
   },
   contrastBtnTextStyle: {
-    color: '#f4eee8',
+    color: 'white',
     fontSize: 16,
     textTransform: 'uppercase',
     fontWeight: 'bold',
@@ -64,19 +62,19 @@ interface DButtonProps {
   rightTitle: string;
   loading: boolean;
   type?: string;
+  isDisabled: boolean;
   style?: ButtonProps;
   onPress: (event: GestureResponderEvent) => void
 }
 
-const SubBtnViewContainer = styled.View`
-
-`
 
 const DButton = ( props: DButtonProps) => {
-  const { title, leftTitle, rightTitle, type, loading, onPress, style, ...rest } = props;
+  const { colors } = useTheme();
+  const { title, leftTitle, rightTitle, isDisabled, type, loading, onPress, style, ...rest } = props;
+
   return (
     <View style={styles.mainContainer}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} disabled={isDisabled}>
         { type == 'regular' && 
         <View style={styles.btnContainerStyle}>
           <View style={styles.subBtnContainerStyle}>
@@ -90,7 +88,7 @@ const DButton = ( props: DButtonProps) => {
           </View>
         </View>}
         { type == 'contrast' && 
-        <View style={(styles.contrastBtnContainerStyle)}>
+        <View style={{...styles.contrastBtnContainerStyle, ...{backgroundColor: colors.accent}}}>
           <View style={styles.subBtnContainerStyle}>
            <Text style={styles.contrastBtnTextStyle}> {leftTitle} </Text>
           </View>

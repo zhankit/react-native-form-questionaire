@@ -1,21 +1,13 @@
 import * as React from 'react';
-import { Alert, SafeAreaView, ScrollView, StatusBar, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-community/picker';
+import { ScrollView, StyleSheet,Image } from 'react-native';
 import { Text, View } from '../../components/Themed/Themed';
-import { bindActionCreators } from 'redux'
 import { useNavigation } from '@react-navigation/native';
-import DTextInput from '../../components/DTextInput';
 import DButton from '../../components/DButton';
-import Dialog from "react-native-dialog";
-import { createStore, applyMiddleware } from 'redux'
-import { connect } from 'react-redux';
-import actions from './actions';
-import DropDownPicker from 'react-native-dropdown-picker';
-
+import { useTheme } from 'react-native-paper';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f4eee8'
   },
   scrollView: {
     borderTopLeftRadius: 80,
@@ -91,153 +83,71 @@ interface option {
 
 const formCreation = (props) => {
 
+  const { colors } = useTheme();
   const navigation = useNavigation();
   const options = [
-    { label: 'Textfield', value: 'textfield'}, 
-    { label: 'Number', value: 'number'},
-    { label: 'Toggle', value: 'toggle'},
-    { label: 'Checkbox', value: 'checkbox'}
+    { 
+      label: 'CHECKBOX', 
+      value: 'checkbox', 
+      icon: require('../../assets/images/vectors/checkbox.png'), 
+      navigationPage : (option: any) => { navigation.navigate('checkboxForm', { option: option, title: ""})}
+    },
+    { 
+      label: 'NUMBER', 
+      value: 'number', 
+      icon: require('../../assets/images/vectors/steps.png'), 
+      navigationPage : (option: any) => { navigation.navigate('numberfieldForm', { option: option, title: ""})}
+    },
+    { 
+      label: 'TEXTFIELD', 
+      value: 'textfield', 
+      icon: require('../../assets/images/vectors/text-box.png'), 
+      navigationPage : (option: any) => { navigation.navigate('textfieldForm', { option: option, title: ""})}
+    },
+    { 
+      label: 'TOGGLE', 
+      value: 'toggle', 
+      icon: require('../../assets/images/vectors/enable.png'), 
+      navigationPage: (option: any) => { navigation.navigate('toggleFieldForm', { option: option, title: ""})}
+    }
   ];
   const [questions, setQuestion] = React.useState([] as any);
-  const [titleValue, setTitleValue] = React.useState('');
-  const [isValidated, setisValidated] = React.useState(true);
-  const [optionValue, setoptionValue] = React.useState('textfield');
-  const [errorText, setErrorText] = React.useState('');
-  const [visible, setVisible] = React.useState(false);
-
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
-  const handleForm = (index: string, value: string, isValidate: boolean) => {
-    setTitleValue(value);
-    setisValidated(isValidate);
-  }
-  
-  const addItem = () => {
-
-    if ( !isValidated ) {
-      setErrorText('Please check if all mandatory fields are filled correctly!');
-      setVisible(true);
-      return ;
-    }
-
-    if ( questions.some( (question: question) => question.title.trim().toLocaleLowerCase() === titleValue.trim().toLocaleLowerCase())) {
-      setErrorText('You have duplicate title!');
-      setVisible(true);
-      return ;
-    }
-    const question: question = {
-      id: titleValue,
-      order: questions.length,
-      type: optionValue,
-      title: titleValue,
-      value: "",
-      required: true,
-    }
-    const result: question[] = [...questions, question];
-    setQuestion(result);
-  };
-
-  React.useEffect( () => {
-    // setoptionValue('');
-  }, [questions])
-
-  const clearList = () => {
-    const result: question[] = [];
-    setQuestion(result);
-  };
 
   const confirmList = () => {
     navigation.navigate('form', { questions: questions, title: "Custom Form"});
   };
 
+  const headerText = 'This simple dynamic form is useful where you can create the new forms on the fly without changing the application code.';
   return (
-    <SafeAreaView style={styles.container}>
-      <View style={{backgroundColor: '#f4eee8'}}>
-        <View style={{ paddingTop: 20, paddingHorizontal: 20, backgroundColor: '#f4eee8'}}>
-          <Text style={{ fontWeight: "bold", fontSize: 30}}>Creating Dynamic Form </Text>
-        </View>
-        <View style={{ paddingHorizontal: 20, backgroundColor: '#f4eee8'}}>
-          <Text style={{ fontWeight: "400", fontSize: 20, textAlign: 'justify'}}>This simple dynamic form is useful where you can create the new forms on the fly without changing the application code.</Text>
+    <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
+      <View style={{backgroundColor: 'white' }}>
+        <View style={{ padding: 30, backgroundColor: colors.primary, borderBottomRightRadius: 30,}}>
+          <Text style={{ fontWeight: "400", fontSize: 20, textAlign: 'justify', color: 'black', marginRight: 20}}>{headerText}</Text>
         </View>
       </View>
+      <ScrollView style={{ backgroundColor: 'white', borderTopLeftRadius: 30}}>
+        <View style={{ marginTop: 40, marginHorizontal: 20, backgroundColor: 'transparent'}}>
+          {
+            options.map( (option, index) => {
+              return (
+                <TouchableOpacity key={index} onPress={option.navigationPage}>
+                  <View style={{ marginVertical: 10, height: 100, flex: 1,justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', borderRadius: 20, backgroundColor: '#dcf4fc'}}>
+                      <View style={{paddingLeft: 40 }}/>
+                      <Image source={option.icon} style={{ width: 60, height: 60}} />
+                      <Text style={{ fontSize: 23, paddingLeft: 20, textAlign: 'flex-start', fontWeight: 'bold', color: '#010621'}}>{option.label}</Text>
+                  </View>
+              </TouchableOpacity>)
+            })
+          }
+        </View>
       
-      <ScrollView style={styles.scrollView}>
-      {/* <View style={styles.ContainerStyle}>
-        <View style={styles.paddingContainer}>
-          <DTextInput 
-            title={"Title"} 
-            value={titleValue} 
-            onFormUpdate={handleForm}
-            validator={ (value: string) => { const letters = new RegExp('^[a-zA-Z0-9 ]+$'); return String(value).length > 0 && letters.test(value) }}
-            validatorMessage={"Field must be not empty or contains special symbol"}
-          /> 
-        </View>
-        <Dialog.Container visible={visible}>
-          <Dialog.Title>Error</Dialog.Title>
-          <Dialog.Description>
-            {errorText}
-          </Dialog.Description>
-          <Dialog.Button label="Okay" onPress={handleCancel} />
-        </Dialog.Container>
-        <View style={styles.paddingContainer}>
-          <Text style={styles.TextStyle}>Type(s) of Question</Text> 
-          <DropDownPicker 
-            items={[
-              {label: 'Textfield', value: 'textfield' },
-              {label: 'Number', value: 'number' },
-              {label: 'Toggle', value: 'toggle' },
-              {label: 'Checkbox', value: 'checkbox' },
-            ]}
-            // defaultValue={{label: 'Textfield', value: 'textfield' }} 
-            containerStyle={{height: 40}}
-            onChangeItem={ (itemValue) => { setoptionValue(itemValue.value);}} 
-            />
-        </View>
-        <View style={styles.buttonContainer}>
-        <View style={styles.subbuttonContainer}>
-          <DButton leftTitle="1" title="REVIEW" loading={false} onPress={ () => addItem()}/>
-        </View>
-      </View>
-      </View> */}
       </ScrollView>
-      <View style={styles.buttonContainer}>
-          <DButton leftTitle="1" title="REVIEW" loading={false} onPress={ () => addItem()}/>
+      <View style={{ backgroundColor: 'white', paddingBottom: 20}}>
+          <DButton leftTitle="1" title="REVIEW" loading={false} type={'contrast'} onPress={ () => addItem()}/>
       </View>
-      {/* {
-        questions.map( (question: question, index: number) => {
-          return (
-          <View key={index} style={styles.questionContainer}>
-            <View style={{ marginRight: 10}}>
-              <Text style={styles.specialText}>{index + 1}</Text>
-            </View>
-            <View>
-              <View>
-                <Text style={{ fontSize: 18}}> Title : {question.title} </Text>
-              </View>
-              <View>
-                <Text style={{ fontSize: 18}}> Type : {question.type}  </Text>
-              </View>
-            </View>
-          </View>)
-        })
-      }
-      { (questions.length > 0) && <DButton title="Create" loading={false} onPress={ () => confirmList()}></DButton> }  */}
-        
-    </SafeAreaView>
+    </View>
     );
 }
 
-// const mapStateToProps = (state) => {
-//   return {
-//     question: state.questions
-//   }
-// }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators(actions, dispatch);
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(formCreation);
 export default formCreation;

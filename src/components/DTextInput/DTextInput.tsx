@@ -7,14 +7,17 @@ const styles = StyleSheet.create({
   ContainerStyle: {
   },
   TextStyle:{
-    fontWeight: "600"
+    fontWeight: "600",
+    fontSize: 20,
+    paddingBottom: 10,
   },
   TextInputStyle: {
     color: 'black',    
     textDecorationColor:'#3CAEA3',
     borderColor: 'black',
-    borderWidth: 1,
+    borderBottomWidth: 2,
     height: 40,
+    paddingLeft: 10
   }
 })
 
@@ -36,6 +39,7 @@ const DTextInput = (props: DTextInputProps) =>  {
 
   const [textValue, setTextValue] = useState(value);
   const [isValidate, setIsValidate] = useState(true);
+  const [backgroundColor, setbackgroundColor] = useState('black');
 
   useEffect( () => {
     
@@ -50,12 +54,14 @@ const DTextInput = (props: DTextInputProps) =>  {
       <TextInput 
         key={id}
         value={textValue}
+        onBlur={ () => setbackgroundColor('black') }
+        onFocus={ () => setbackgroundColor('green') }
         onChangeText={(text) => { setTextValue(text)}}
         selectionColor={'blue'}
-        style={[styles.TextInputStyle]}
+        style={{...styles.TextInputStyle, ...{ borderColor: backgroundColor}}}
         placeholder={placeholder} 
         />  
-      { !isValidate && (<Text style={{color : '#e00000'}}> {validatorMessage} </Text>) }
+      { !isValidate && (<Text style={{color : '#e00000', paddingTop: 10}}> {validatorMessage} </Text>) }
     </View>    
   );
 
