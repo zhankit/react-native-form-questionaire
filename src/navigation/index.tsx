@@ -45,7 +45,7 @@ const Navigation = ( props: NavigationProps ) => {
         headerBackTitleVisible: false,
         headerTintColor: props.theme.colors.text,
         headerStyle: { backgroundColor: props.theme.colors.primary},
-        
+        headerTitleStyle : styles.headerTextStyle
       }}>
       <Stack.Screen 
         name="Home" 

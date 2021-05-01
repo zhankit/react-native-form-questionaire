@@ -124,7 +124,7 @@ const numberfieldForm = (props) => {
         </View>
         <View style={{ paddingHorizontal: 20, backgroundColor: colors.primary,  flexShrink: 1}}>
           <Text style={{ fontWeight: "bold", fontSize: 24, textAlign: 'justify', color: 'black', marginRight: 20}}>NumberField</Text>
-          <Text style={{ fontWeight: "400", fontSize: 20, textAlign: 'justify', color: 'black', marginRight: 10}}>{headerText}</Text>
+          <Text style={{ fontWeight: "400", fontSize: 20, textAlign: 'left', color: 'black', marginRight: 10}}>{headerText}</Text>
         </View>
       </View>
       <ScrollView style={{ backgroundColor: 'white', borderTopLeftRadius: 30, borderTopRightRadius: 30}}>

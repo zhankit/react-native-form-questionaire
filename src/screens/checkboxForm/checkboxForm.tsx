@@ -101,7 +101,6 @@ const checkboxForm = (props) => {
   };
 
   const handleForm = (index: string, value: string, isValidate: boolean) => {
-    console.log('awedaw', value);
     setTitleValue(value);
     setisValidated(isValidate);
   }

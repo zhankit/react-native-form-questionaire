@@ -134,7 +134,7 @@ const formCreation = (props) => {
                   <View style={{ marginVertical: 10, height: 100, flex: 1,justifyContent: 'flex-start', flexDirection: 'row', alignItems: 'center', borderRadius: 20, backgroundColor: '#dcf4fc'}}>
                       <View style={{paddingLeft: 40 }}/>
                       <Image source={option.icon} style={{ width: 60, height: 60}} />
-                      <Text style={{ fontSize: 23, paddingLeft: 20, textAlign: 'flex-start', fontWeight: 'bold', color: '#010621'}}>{option.label}</Text>
+                      <Text style={{ fontSize: 23, paddingLeft: 20, textAlign: 'left', fontWeight: 'bold', color: '#010621'}}>{option.label}</Text>
                   </View>
               </TouchableOpacity>)
             })

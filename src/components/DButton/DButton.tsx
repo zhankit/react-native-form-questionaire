@@ -1,7 +1,6 @@
 import React from 'react'
 import { Text, View, TouchableOpacity, StyleSheet, GestureResponderEvent } from 'react-native'
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { useTheme  } from 'react-native-paper';
 import { ButtonProps } from '@material-ui/core';
 
@@ -9,16 +8,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     paddingLeft: 20,
     paddingRight: 20,
-  },
-  btnContainerStyle: {
-    borderRadius: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#08d9d6',
-    marginTop: 15,
-    marginBottom: 5,
-    height: 50,
   },
   btnTextStyle: {
     color: '#252a34',
@@ -28,14 +17,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignContent: 'center'
   },
-  contrastBtnContainerStyle: {
+  buttonContainerStyle: {
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 5,
+    justifyContent: 'space-evenly',
     height: 50,
+    display: 'flex'
   },
   contrastBtnTextStyle: {
     color: 'white',
@@ -45,13 +33,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     alignContent: 'center'
   },
-  leftBtnTextStyle : {
-    color: '#f4eee8',
-    fontSize: 16,
-    textTransform: 'uppercase',
-    fontWeight: 'bold',
+  leftButtonStyle : {
+    flex: 1
   },
-  subBtnContainerStyle : {
+  titleButtonStyle : {
+    flex: 1
+  },
+  rightButtonStyle : {
     flex: 1
   }
 })
@@ -75,30 +63,17 @@ const DButton = ( props: DButtonProps) => {
   return (
     <View style={styles.mainContainer}>
       <TouchableOpacity onPress={onPress} disabled={isDisabled}>
-        { type == 'regular' && 
-        <View style={styles.btnContainerStyle}>
-          <View style={styles.subBtnContainerStyle}>
-           <Text style={styles.btnTextStyle}> {leftTitle} </Text>
-          </View>
-          <View style={styles.subBtnContainerStyle}>
-            <Text style={styles.btnTextStyle}> {title} </Text>
-          </View>
-          <View style={styles.subBtnContainerStyle}>
-            <Text style={styles.btnTextStyle}> {rightTitle} </Text>
-          </View>
-        </View>}
-        { type == 'contrast' && 
-        <View style={{...styles.contrastBtnContainerStyle, ...{backgroundColor: colors.accent}}}>
-          <View style={styles.subBtnContainerStyle}>
+        <View style={{...styles.buttonContainerStyle, ...{backgroundColor: colors.accent}}}>
+          <View style={styles.leftButtonStyle}>
            <Text style={styles.contrastBtnTextStyle}> {leftTitle} </Text>
           </View>
-          <View style={styles.subBtnContainerStyle}>
+          <View style={styles.titleButtonStyle}>
             <Text style={styles.contrastBtnTextStyle}> {title} </Text>
           </View>
-          <View style={styles.subBtnContainerStyle}>
+          <View style={styles.rightButtonStyle}>
             <Text style={styles.contrastBtnTextStyle}> {rightTitle} </Text>
           </View>
-        </View>}
+        </View>
       </TouchableOpacity>
     </View>
     
