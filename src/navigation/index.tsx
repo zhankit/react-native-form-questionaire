@@ -1,20 +1,15 @@
 import * as React from 'react';
-import { ColorSchemeName, StyleSheet} from 'react-native';
-import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import LinkingConfiguration from './LinkingConfiguration';
-import { useNavigation } from '@react-navigation/native';
-
+import { StyleSheet} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../screens/home';
 import form from '../screens/form';
-import FormCreation from '../screens/FormCreation';
+import FormCreation from '../screens/formCreation';
 import { Theme } from 'react-native-paper/lib/typescript/types';
-import { color } from 'react-native-reanimated';
-import componentCreation from '../screens/TextfieldForm';
-import TextfieldForm from '../screens/TextfieldForm';
-import NumberfieldForm from '../screens/NumberfieldForm';
-import ToggleFieldForm from '../screens/ToggleFieldForm';
-import CheckboxForm from '../screens/CheckboxForm';
+import TextfieldForm from '../screens/textfieldForm';
+import NumberfieldForm from '../screens/numberfieldForm';
+import ToggleFieldForm from '../screens/toggleFieldForm';
+import CheckboxForm from '../screens/checkboxForm';
 
 const styles= StyleSheet.create({
   headerTextStyle: {

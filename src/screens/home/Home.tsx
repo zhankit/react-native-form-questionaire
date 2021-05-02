@@ -20,7 +20,7 @@ const HomeScreen = (props: HomeScreenProps) => {
   return (
   <View style={{...styles.mainContainer, ...{ backgroundColor: colors.primary}}}>
     <Text style={{...styles.container, ...{ color: colors.text}}}>Welcome to the demo of Dynamic React-Forms Component!</Text>
-    <DButton title="Start" type={'contrast'} onPress={ () => navigation.navigate('FormCreation')}></DButton>
+    <DButton title="Start" isDisabled={false} type={'contrast'} onPress={ () => navigation.navigate('FormCreation')}></DButton>
   </View>
   );
 }
