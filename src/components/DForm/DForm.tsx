@@ -1,41 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, Text, View, TextProps } from 'react-native'
+import { Text, View } from 'react-native'
+import  { styles } from './styles';
 import PropTypes from 'prop-types';
 import DCheckbox from '../DCheckbox';
 import DTextInput from '../DTextInput';
 import DNumberInput from '../DNumberInput';
 import DToggle from '../DToggle';
 import DButton from '../DButton';
-
-const styles = StyleSheet.create({
-  ContainerStyle: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'flex-start',
-  },
-  TextStyle:{
-    fontWeight: "600"
-  },
-  TextInputStyle: {
-    // color: 'black',
-    // textDecorationColor:'#3CAEA3',
-    // borderColor: 'black',
-    // borderWidth: 1,
-    // marginTop: '3px',
-    // paddingHorizontal: '10px',
-    // height: '50px',
-  },
-  titleTextStyle:{
-    // fontSize: 20,
-    // fontWeight: 'bold',
-    // paddingHorizontal: '20px',
-  },
-  questionContainer: {
-    paddingLeft: 20, 
-    paddingRight: 20, 
-    paddingTop: 10
-  }
-})
 
 interface DFormProps {
   title: string;
@@ -141,7 +112,10 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
           }
       })}
-      <DButton title="Review" loading={false} onPress={ () => review(questionsValue)}></DButton>
+      <DButton 
+        title="Review"
+        isDisabled={false}
+        onPress={ () => review(questionsValue)}></DButton>
     </View>
     );
 }

@@ -6,9 +6,9 @@ import { DefaultTheme as NavigationDarkTheme} from '@react-navigation/native';
 import useCachedResources from './src/assets/hooks/useCachedResources';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Provider, connect } from 'react-redux';
-import { SafeAreaView, useColorScheme } from 'react-native';
+import { useColorScheme } from 'react-native';
 import merge from 'deepmerge';
-// import { store } from './src/redux/store/store';
+import { store } from './src/redux/store/store';
 
 const MyPaperDarkTheme = {
   ...PaperDarkTheme,
@@ -18,7 +18,6 @@ const MyPaperDarkTheme = {
     text: 'black',
   },
 };
-// primary: '#252a34',
 
 const MyNavigationDarkTheme = {
   ...NavigationDarkTheme,
@@ -34,18 +33,19 @@ const CombinedDefaultTheme = merge(MyPaperDarkTheme, MyNavigationDarkTheme);
 
 const App = () => {
 
-  const colorScheme = useColorScheme();
   const isLoadingComplete = useCachedResources();
-  const Stack = createStackNavigator();   
+
   if (!isLoadingComplete) {
     return null;
   } 
   else {
       return (
-        <PaperProvider theme={CombinedDefaultTheme}>
-          <Navigation theme={CombinedDefaultTheme}/>
-          <StatusBar  backgroundColor={CombinedDefaultTheme.colors.primary} translucent={true}/>
-        </PaperProvider>
+        <Provider store={store}>
+          <PaperProvider theme={CombinedDefaultTheme}>
+            <Navigation theme={CombinedDefaultTheme}/>
+            <StatusBar  backgroundColor={CombinedDefaultTheme.colors.primary} translucent={true}/>
+          </PaperProvider>
+        </Provider>
     );
   }
 }

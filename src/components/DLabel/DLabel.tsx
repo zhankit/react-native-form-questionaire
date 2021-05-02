@@ -1,13 +1,7 @@
 import * as React from 'react';
-import { StyleSheet, TextInput, Text, View, TextProps } from 'react-native'
+import { Text } from 'react-native'
 import PropTypes from 'prop-types';
-
-const styles = StyleSheet.create({
-  TextStyle:{
-    paddingHorizontal: '20px',
-  },
-})
-
+import { styles } from './styles';
 interface DLabelProps {
   text: string;
 }

@@ -1,26 +1,11 @@
 import * as React from 'react';
-import { StyleSheet } from 'react-native';
 import Dform from '../../components/DForm/DForm';
 import { View } from '../../components/Themed/Themed';
+import { styles } from './styles';
+import { FormReducersProps, formConnector } from '../../redux/actions/actions';
 
-const styles = StyleSheet.create({
-  ContainerStyle: {
-    flex: 1,
-    alignItems: 'stretch',
-    justifyContent: 'flex-start',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    // width: '80%',
-  },
-});
 
-const formA = (props) => {
+const formA = (props: FormReducersProps) => {
   const { title, questions } = props.route.params;
 
   return (
@@ -33,4 +18,4 @@ const formA = (props) => {
   );
 }
 
-export default formA;
+export default formConnector(formA);

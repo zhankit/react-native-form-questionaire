@@ -1,26 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput, Text, View } from 'react-native'
+import { TextInput, Text, View } from 'react-native'
 import PropTypes from 'prop-types';
-import { colors } from '@material-ui/core';
-
-const styles = StyleSheet.create({
-  ContainerStyle: {
-  },
-  TextStyle:{
-    fontWeight: "600",
-    fontSize: 20,
-    paddingBottom: 10,
-  },
-  TextInputStyle: {
-    color: 'black',    
-    textDecorationColor:'#3CAEA3',
-    borderColor: 'black',
-    borderBottomWidth: 2,
-    height: 40,
-    paddingLeft: 10
-  }
-})
-
+import  { styles } from './styles';
 interface DTextInputProps {
   id: string;
   index?: number;

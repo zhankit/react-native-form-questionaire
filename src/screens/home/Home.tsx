@@ -4,28 +4,9 @@ import DButton from '../../components/DButton';
 import { Text, View } from '../../components/Themed/Themed';
 import { useNavigation } from '@react-navigation/native';
 import { useTheme  } from 'react-native-paper';
+import { styles } from './styles';
 
-const styles = StyleSheet.create({ 
-  container: { 
-    fontWeight: 'bold', 
-    fontSize: 30,
-    paddingLeft: 20,
-    paddingRight: 20,
-  },
-  mainContainer: {
-    flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
-  },
-  logo: {
-    width: 200,
-    height: 200
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  }
-});
+
 
 interface HomeScreenProps {
   props: any
@@ -39,7 +20,7 @@ const HomeScreen = (props: HomeScreenProps) => {
   return (
   <View style={{...styles.mainContainer, ...{ backgroundColor: colors.primary}}}>
     <Text style={{...styles.container, ...{ color: colors.text}}}>Welcome to the demo of Dynamic React-Forms Component!</Text>
-    <DButton title="Start" loading={false} type={'contrast'} onPress={ () => navigation.navigate('formCreation')}></DButton>
+    <DButton title="Start" type={'contrast'} onPress={ () => navigation.navigate('FormCreation')}></DButton>
   </View>
   );
 }

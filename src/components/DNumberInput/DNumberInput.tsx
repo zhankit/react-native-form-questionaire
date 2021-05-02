@@ -1,22 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput, Text, View } from 'react-native'
+import { TextInput, Text, View } from 'react-native'
 import PropTypes from 'prop-types';
-import { colors } from '@material-ui/core';
-
-const styles = StyleSheet.create({
-  ContainerStyle: {
-  },
-  TextStyle:{
-    fontWeight: "600"
-  },
-  TextInputStyle: {
-    color: 'black',    
-    textDecorationColor:'#3CAEA3',
-    borderColor: 'black',
-    borderWidth: 1,
-    height: 40,
-  },
-})
+import  { styles } from './styles';
 
 interface DNumberInputProps {
   id: string;

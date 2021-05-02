@@ -1,33 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput, Text, View, Switch } from 'react-native'
+import { Text, View, Switch } from 'react-native'
 import PropTypes from 'prop-types';
-import { colors } from '@material-ui/core';
-// import './style.css' // for ES6 modules
-
-const styles = StyleSheet.create({
-  ContainerStyle: {
-    flexDirection: 'row',
-    color: 'black',
-    textDecorationColor:'#3CAEA3',
-    // marginHorizontal: '20px',
-    // marginTop: '10px',
-    // height: '70px',
-  },
-  TextStyle:{
-    // marginLeft: '20px',
-    // fontWeight: "600"
-  },
-  TextInputStyle: {
-    color: 'black',    
-    textDecorationColor:'#3CAEA3',
-    borderColor: 'black',
-    borderWidth: 1,
-    // marginTop: '3px',
-    // paddingHorizontal: '10px',
-    // height: '50px',
-  },
-})
-
+import  { styles } from './styles';
 interface DToggleProps {
   id: string;
   title: string;

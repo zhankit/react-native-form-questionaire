@@ -7,14 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 
 import HomeScreen from '../screens/home';
 import form from '../screens/form';
-import formCreation from '../screens/formCreation';
+import FormCreation from '../screens/FormCreation';
 import { Theme } from 'react-native-paper/lib/typescript/types';
 import { color } from 'react-native-reanimated';
-import componentCreation from '../screens/textfieldForm';
-import textfieldForm from '../screens/textfieldForm';
-import numberfieldForm from '../screens/numberfieldForm';
-import toggleFieldForm from '../screens/toggleFieldForm';
-import checkboxForm from '../screens/checkboxForm';
+import componentCreation from '../screens/TextfieldForm';
+import TextfieldForm from '../screens/TextfieldForm';
+import NumberfieldForm from '../screens/NumberfieldForm';
+import ToggleFieldForm from '../screens/ToggleFieldForm';
+import CheckboxForm from '../screens/CheckboxForm';
 
 const styles= StyleSheet.create({
   headerTextStyle: {
@@ -56,24 +56,24 @@ const Navigation = ( props: NavigationProps ) => {
         component={form} 
         options={{ title: '' }}/>
       <Stack.Screen 
-        name="formCreation" 
-        component={formCreation}
+        name="FormCreation" 
+        component={FormCreation}
          options={{ title: 'Dynamic Form' }}/>
       <Stack.Screen 
-        name="textfieldForm" 
-        component={textfieldForm}
+        name="TextfieldForm" 
+        component={TextfieldForm}
          options={{ title: '' }}/>
       <Stack.Screen 
-        name="numberfieldForm" 
-        component={numberfieldForm}
+        name="NumberfieldForm" 
+        component={NumberfieldForm}
          options={{ title: '' }}/>
       <Stack.Screen 
-        name="toggleFieldForm" 
-        component={toggleFieldForm}
+        name="ToggleFieldForm" 
+        component={ToggleFieldForm}
          options={{ title: '' }}/>
       <Stack.Screen 
-        name="checkboxForm" 
-        component={checkboxForm}
+        name="CheckboxForm" 
+        component={CheckboxForm}
          options={{ title: '' }}/>
     </Stack.Navigator>
   </NavigationContainer>
