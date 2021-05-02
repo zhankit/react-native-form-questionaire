@@ -7,7 +7,7 @@ import { useTheme } from 'react-native-paper';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { FormReducersProps, formConnector } from '../../redux/actions/actions';
 import { styles } from './styles';
-import { Icon } from 'react-native-elements'
+import Dialog from "react-native-dialog";
 import { Question } from '../../interfaces/interfaces';
 
 const FormCart = (props: FormReducersProps) => {
@@ -16,10 +16,24 @@ const FormCart = (props: FormReducersProps) => {
   const navigation = useNavigation();
   const headerText = 'You may review all the components that are added earlier before checkout.';
 
+
+  const [errorText, setErrorText] = React.useState('');
+  const [visible, setVisible] = React.useState(false);
+  const [focusID, setFocusID] = React.useState('');
+
   const confirmList = () => {
     navigation.navigate('Form', { title: "Custom Form"});
   };
 
+  const removeItems = (index: String) => {
+    
+    props.removeItems(index);
+    setVisible(false);    
+    if (props.state.authReducer.forms.length == 0 ) {
+      navigation.goBack();
+    }
+  }
+  
   return (
     <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
       <View style={styles.headerWrapper}>
@@ -32,26 +46,27 @@ const FormCart = (props: FormReducersProps) => {
       <ScrollView style={styles.scrollViewContainer}>
         <View style={styles.optionsContainer}>
           {
-            props.state.authReducer.forms.map( (component: Question, index) => {
-              console.log('itesm', component);
+            props.state.authReducer.forms.map( (component: Question) => {
               return (
-                  <View style={styles.optionViewContainer}>
+                  <View key={component.id} style={styles.optionViewContainer}>
                       <View style={styles.optionViewPaddingContainer}>
-                        <Text style={styles.orderText}>{index + 1}</Text>
+                        <Text style={styles.orderText}>{component.order}</Text>
                       </View>
                       <View style={styles.textViewPaddingContainer}>
                         <Text style={styles.optionTextContainer}>{component.type}</Text>
                         <Text style={styles.subOptionTextContainer}>{component.title}</Text>
                       </View>
                       <View style={styles.editPaddingContainer}>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={ () => {}}>
                           <ImageBackground
                             source={require('../../assets/images/vectors/pencil.png')}
                             style={styles.iconContainer} />
                         </TouchableOpacity>
                       </View>
                       <View style={styles.deletePaddingContainer}>
-                        <TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={ () => { setFocusID(component.id); setVisible(true); }}>
                           <ImageBackground
                             source={require('../../assets/images/vectors/trash.png')}
                             style={styles.iconContainer} />
@@ -62,6 +77,15 @@ const FormCart = (props: FormReducersProps) => {
           }
         </View> 
       </ScrollView>
+
+      <Dialog.Container visible={visible}>
+        <Dialog.Title>Confirm Deletion</Dialog.Title>
+        <Dialog.Description>
+          Are you sure you want to delete this item?
+        </Dialog.Description>
+        <Dialog.Button label="Cancel" onPress={() => { setVisible(false)} } />
+        <Dialog.Button label="Ok" onPress={() => { removeItems(focusID); }} />
+      </Dialog.Container>
 
       <View style={styles.submitButtonContainer}>
         <DButton 

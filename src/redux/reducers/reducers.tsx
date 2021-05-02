@@ -1,3 +1,5 @@
+import { Question } from "../../interfaces/interfaces";
+
 const initialUserState = {
     forms: []
 }
@@ -10,7 +12,10 @@ const formReducers = (state = initialUserState, action: any) => {
             forms: [...state.forms, action.newItem]
          }
       case 'REMOVE_ITEMS':
-        return { forms: [1] }
+        return { 
+          ...state,
+          forms: state.forms.filter( (items: Question) => items.id != action.payload) 
+        }
       default:
         return state;
     }
