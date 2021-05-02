@@ -44,9 +44,9 @@ const Navigation = ( props: NavigationProps ) => {
           headerTitleStyle : styles.headerTextStyle
         }}>
         <MainStack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }}/>
-        <MainStack.Screen name="form" component={form} options={{ title: '' }}/>
+        <MainStack.Screen name="Form" component={form} options={{ title: '' }}/>
         <MainStack.Screen name="FormCreation" component={FormCreation} options={{ title: 'Dynamic Form' }}/>
-        <MainStack.Screen name="FormCart" component={FormCart} options={{ title: 'Cart' }}/>
+        <MainStack.Screen name="FormCart" component={FormCart} options={{ title: 'Forms Cart' }}/>
       </MainStack.Navigator>
     )
   }

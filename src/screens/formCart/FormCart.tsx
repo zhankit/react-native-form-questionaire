@@ -15,6 +15,11 @@ const FormCart = (props: FormReducersProps) => {
   const { colors } = useTheme();
   const navigation = useNavigation();
   const headerText = 'You may review all the components that are added earlier before checkout.';
+
+  const confirmList = () => {
+    navigation.navigate('Form', { title: "Custom Form"});
+  };
+
   return (
     <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
       <View style={styles.headerWrapper}>
@@ -62,7 +67,7 @@ const FormCart = (props: FormReducersProps) => {
         <DButton 
           isDisabled={false} 
           title="Confirm" 
-          onPress={ () => addItem()}/>
+          onPress={ () => confirmList()}/>
       </View>
     </View>
     );

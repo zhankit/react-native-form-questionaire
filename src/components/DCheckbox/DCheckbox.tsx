@@ -32,13 +32,15 @@ const DCheckbox = (props: DCheckboxProps) =>  {
   return(
     <View style={styles.ContainerStyle}>
     
-      <Checkbox 
+      <Checkbox.Android  
         status={checkedValue ? 'checked' : 'unchecked'}
-        color={'black'}
-        uncheckedColor={'black'}
+        color={'#0D3B66'}
+        uncheckedColor={'#0D3B66'}
         onPress={() => setcheckedValue(!checkedValue)}
-        />       
+      />
+      <View style={styles.textContainer}>
         <Text style={styles.TextStyle}>{title}</Text> 
+      </View>  
     </View>    
   );
 
