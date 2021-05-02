@@ -16,7 +16,7 @@ const CheckboxForm = (props: FormReducersProps) => {
   const [formValue, setformValue] = React.useState({
     id: '',
     order: 0,
-    type: 'checkBox',
+    type: 'Checkbox',
     title: '',
     value: '',
     required: false,

@@ -17,7 +17,7 @@ const NumberfieldForm = (props: FormReducersProps) => {
   const [formValue, setformValue] = React.useState({
     id: '',
     order: 0,
-    type: 'checkBox',
+    type: 'Numberfield',
     title: '',
     value: '',
     required: false,

@@ -16,7 +16,7 @@ const TextfieldForm = (props: FormReducersProps) => {
   const [formValue, setformValue] = React.useState({
     id: '',
     order: 0,
-    type: 'checkBox',
+    type: 'Textfield',
     title: '',
     value: '',
     required: false,
@@ -56,7 +56,7 @@ const TextfieldForm = (props: FormReducersProps) => {
           <Image source={require('../../assets/images/vectors/text-box.png')} style={styles.imageStyle} />
         </View>
         <View style={{ paddingHorizontal: 20, backgroundColor: colors.primary,  flexShrink: 1}}>
-          <Text style={styles.title}>Checkbox</Text>
+          <Text style={styles.title}>Textfield</Text>
           <Text style={styles.subTitle}>{headerText}</Text>
         </View>
       </View>

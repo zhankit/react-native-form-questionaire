@@ -16,7 +16,7 @@ const ToggleFieldForm = (props: FormReducersProps) => {
   const [formValue, setformValue] = React.useState({
     id: '',
     order: 0,
-    type: 'checkBox',
+    type: 'Toggle',
     title: '',
     value: '',
     required: false,

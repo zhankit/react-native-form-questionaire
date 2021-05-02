@@ -1,4 +1,6 @@
-interface Question {
+import { Theme } from 'react-native-paper/lib/typescript/types';
+
+export interface Question {
     id: string;
     order: number;
     type: string;
@@ -10,9 +12,7 @@ interface Question {
     options?: Option[];
 }
   
-interface Option {
+export interface Option {
     key: string;
     value: string
 }
-  
-

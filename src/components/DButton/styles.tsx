@@ -43,6 +43,9 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignContent: 'center',
       textAlign: 'center',
+    },
+    titleContainer: {
+      justifyContent: 'center'
     }
 })
 

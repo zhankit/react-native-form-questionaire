@@ -18,9 +18,11 @@ const DButton = ( props: DButtonProps) => {
   return (
     <View style={styles.mainContainer}>
       <TouchableOpacity onPress={onPress} disabled={isDisabled}>
-        <View style={{...styles.buttonContainerStyle, ...{backgroundColor: colors.accent}}}>
+        <View style={{...styles.buttonContainerStyle, ...{backgroundColor: isDisabled ? '#C0C0C0' : colors.accent}}}>
           <View style={styles.titleButtonStyle}>
-            <Text style={styles.BtnTextStyle}> {title} </Text>
+            <View style={styles.titleContainer}>
+              <Text style={styles.BtnTextStyle}> {title} </Text>
+            </View>
             { leftTitle.length > 0 && 
               <View style={styles.circleStyle}>
                 <Text style={styles.BtnTextStyle}> {leftTitle} </Text>
