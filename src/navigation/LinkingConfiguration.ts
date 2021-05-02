@@ -17,9 +17,9 @@ export default {
               DashboardMainScreen: 'Form',
             },
           },
-          formCreation: {
+          FormCreation: {
             screens: {
-              formCreationScreen: 'formCreation',
+              formCreationScreen: 'FormCreation',
             },
           },
         },

@@ -1,24 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, TextInput, Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 import PropTypes from 'prop-types';
-import { colors } from '@material-ui/core';
 import { Checkbox } from 'react-native-paper';
-
-const styles = StyleSheet.create({
-  ContainerStyle: {
-    flexDirection: 'row',
-    // color: 'black',
-    // textDecorationColor:'#3CAEA3',
-    // marginHorizontal: '20px',
-    // marginTop: '10px',
-    // height: '70px',
-  },
-  TextStyle:{
-    fontWeight: "600"
-  },
-  TextInputStyle: {
-  },
-})
+import  { styles } from './styles';
 
 interface DCheckboxProps {
   id: string;

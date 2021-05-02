@@ -1,20 +1,15 @@
 import * as React from 'react';
-import { ColorSchemeName, StyleSheet} from 'react-native';
-import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import LinkingConfiguration from './LinkingConfiguration';
-import { useNavigation } from '@react-navigation/native';
-
+import { StyleSheet} from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 import HomeScreen from '../screens/home';
 import form from '../screens/form';
-import formCreation from '../screens/formCreation';
+import FormCreation from '../screens/formCreation';
 import { Theme } from 'react-native-paper/lib/typescript/types';
-import { color } from 'react-native-reanimated';
-import componentCreation from '../screens/textfieldForm';
-import textfieldForm from '../screens/textfieldForm';
-import numberfieldForm from '../screens/numberfieldForm';
-import toggleFieldForm from '../screens/toggleFieldForm';
-import checkboxForm from '../screens/checkboxForm';
+import TextfieldForm from '../screens/textfieldForm';
+import NumberfieldForm from '../screens/numberfieldForm';
+import ToggleFieldForm from '../screens/toggleFieldForm';
+import CheckboxForm from '../screens/checkboxForm';
 
 const styles= StyleSheet.create({
   headerTextStyle: {
@@ -56,24 +51,24 @@ const Navigation = ( props: NavigationProps ) => {
         component={form} 
         options={{ title: '' }}/>
       <Stack.Screen 
-        name="formCreation" 
-        component={formCreation}
+        name="FormCreation" 
+        component={FormCreation}
          options={{ title: 'Dynamic Form' }}/>
       <Stack.Screen 
-        name="textfieldForm" 
-        component={textfieldForm}
+        name="TextfieldForm" 
+        component={TextfieldForm}
          options={{ title: '' }}/>
       <Stack.Screen 
-        name="numberfieldForm" 
-        component={numberfieldForm}
+        name="NumberfieldForm" 
+        component={NumberfieldForm}
          options={{ title: '' }}/>
       <Stack.Screen 
-        name="toggleFieldForm" 
-        component={toggleFieldForm}
+        name="ToggleFieldForm" 
+        component={ToggleFieldForm}
          options={{ title: '' }}/>
       <Stack.Screen 
-        name="checkboxForm" 
-        component={checkboxForm}
+        name="CheckboxForm" 
+        component={CheckboxForm}
          options={{ title: '' }}/>
     </Stack.Navigator>
   </NavigationContainer>
