@@ -27,6 +27,8 @@ const formReducers = (state = initialUserState, action: any) => {
           ...state,
           forms: action.newForm
         }
+      case 'FORMS_LENGTH':
+        return state.forms.length
       default:
         return state;
     }

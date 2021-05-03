@@ -46,7 +46,7 @@ const DToggle = (props: DToggleProps) =>  {
 
 DToggle.propTypes = {
   title: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.bool,
   onChangeText: PropTypes.func,
   secureTextEntry: PropTypes.any
 };
