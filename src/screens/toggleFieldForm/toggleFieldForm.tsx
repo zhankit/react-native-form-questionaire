@@ -50,6 +50,7 @@ const ToggleFieldForm = (props: FormReducersProps) => {
 
 
   const headerText = 'A toggle button allows the user to change a setting between two states. So, it is like how you switch on your light!';
+  
   return (
     <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
 

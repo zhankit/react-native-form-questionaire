@@ -8,9 +8,7 @@ const mapState = ( state: any ) => {
 
 const mapDispatch = {
     addItems: (formValue: Question) => ({ type: 'ADD_ITEMS', newItem: formValue }),
-    removeItems: (index: String) => {
-        Promise.resolve({ type: 'REMOVE_ITEMS', payload: index });
-    }
+    removeItems: (index: String) => ({ type: 'REMOVE_ITEMS', payload: index })
 }
   
 const formConnector = connect(mapState, mapDispatch)
