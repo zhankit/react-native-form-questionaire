@@ -6,33 +6,32 @@ import  { styles } from './styles';
 
 interface DCheckboxProps {
   id: string;
-  index: number;
   title: string;
   value: boolean;
   required: boolean;
   onFormUpdate: Function;
   validator: Function;
-  options: any;
   validatorMessage?: string;
   placeholder?: string;
 }
 
 const DCheckbox = (props: DCheckboxProps) =>  {
   
-  const {id, title, index, required, value, placeholder, options, validator, validatorMessage, onFormUpdate} = props;
+  const {id, title, required, value, placeholder, validator, validatorMessage, onFormUpdate} = props;
 
   const [checkedValue, setcheckedValue] = useState(value);
   const [isValidate, setIsValidate] = useState(true);
 
   useEffect( () => {
-    onFormUpdate(index, checkedValue);
     setIsValidate(validator(checkedValue));
+    onFormUpdate(id, checkedValue, isValidate);
   }, [checkedValue, isValidate])
   
   return(
     <View style={styles.ContainerStyle}>
     
       <Checkbox.Android  
+        key={id}
         status={checkedValue ? 'checked' : 'unchecked'}
         color={'#0D3B66'}
         uncheckedColor={'#0D3B66'}
@@ -48,7 +47,7 @@ const DCheckbox = (props: DCheckboxProps) =>  {
 
 DCheckbox.propTypes = {
   title: PropTypes.string,
-  value: PropTypes.string,
+  value: PropTypes.bool,
   onChangeText: PropTypes.func,
   secureTextEntry: PropTypes.any
 };

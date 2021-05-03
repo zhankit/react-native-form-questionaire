@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { TextInput, Text, View } from 'react-native'
 import PropTypes from 'prop-types';
 import  { styles } from './styles';
+import { Question } from '../../interfaces/interfaces';
 interface DTextInputProps {
   id: string;
   index?: number;
@@ -23,12 +24,12 @@ const DTextInput = (props: DTextInputProps) =>  {
   const [backgroundColor, setbackgroundColor] = useState('black');
 
   useEffect( () => {
-    
     setIsValidate(validator(textValue));
-    onFormUpdate(index, textValue, isValidate);
+    onFormUpdate(id, textValue, isValidate);
 
   }, [textValue, isValidate])
   
+
   return(
     <View style={styles.ContainerStyle}>
       <Text style={styles.TextStyle}>{title}{ required? <Text style={{color : '#e00000'}}> *</Text>: ''} </Text> 

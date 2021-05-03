@@ -4,11 +4,11 @@ import Navigation from './src/navigation';
 import { DefaultTheme as PaperDarkTheme, Provider as PaperProvider } from 'react-native-paper';
 import { DefaultTheme as NavigationDarkTheme} from '@react-navigation/native';
 import useCachedResources from './src/assets/hooks/useCachedResources';
-import { createStackNavigator } from '@react-navigation/stack';
 import { Provider, connect } from 'react-redux';
-import { useColorScheme } from 'react-native';
+import ErrorBoundary from 'react-native-error-boundary'
 import merge from 'deepmerge';
 import { store } from './src/redux/store/store';
+import CustomFallback from './src/components/DError/DError';
 
 const MyPaperDarkTheme = {
   ...PaperDarkTheme,
@@ -40,12 +40,14 @@ const App = () => {
   } 
   else {
       return (
-        <Provider store={store}>
-          <PaperProvider theme={CombinedDefaultTheme}>
-            <Navigation theme={CombinedDefaultTheme}/>
-            <StatusBar  backgroundColor={CombinedDefaultTheme.colors.primary} translucent={true}/>
-          </PaperProvider>
-        </Provider>
+        <ErrorBoundary FallbackComponent={CustomFallback}>
+          <Provider store={store}>
+            <PaperProvider theme={CombinedDefaultTheme}>
+              <Navigation theme={CombinedDefaultTheme}/>
+              <StatusBar  backgroundColor={CombinedDefaultTheme.colors.primary} translucent={true}/>
+            </PaperProvider>
+          </Provider>
+        </ErrorBoundary>
     );
   }
 }

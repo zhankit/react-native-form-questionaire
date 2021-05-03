@@ -24,6 +24,7 @@
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-dialog": "^8.0.1",
     "react-native-elements": "^3.4.1",
+    "react-native-error-boundary": "^1.1.8",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-paper": "^4.8.1",
     "react-native-reanimated": "^2.1.0",

@@ -19,7 +19,7 @@ const CheckboxForm = (props: FormReducersProps) => {
     order: props.state.authReducer.forms.length + 1,
     type: 'Checkbox',
     title: '',
-    value: '',
+    value: false,
     required: false,
     validator: () => {},
     validatorMsg: '',

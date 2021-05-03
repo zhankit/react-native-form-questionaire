@@ -19,7 +19,7 @@ const ToggleFieldForm = (props: FormReducersProps) => {
     order: props.state.authReducer.forms.length + 1,
     type: 'Toggle',
     title: '',
-    value: '',
+    value: false,
     required: false,
     validator: () => {},
     validatorMsg: '',
@@ -47,6 +47,10 @@ const ToggleFieldForm = (props: FormReducersProps) => {
     props.addItems(formValue);
     navigation.goBack();
   }
+
+  componentDidCatch = () =>{
+    
+  } 
 
 
   const headerText = 'A toggle button allows the user to change a setting between two states. So, it is like how you switch on your light!';

@@ -9,18 +9,24 @@ import DTextInput from '../../components/DTextInput';
 import { FormReducersProps, formConnector } from '../../redux/actions/actions';
 import  { styles } from './styles';
 import DForm from '../../components/DForm'
+import { Question } from '../../interfaces/interfaces';
 
 const formA = (props: FormReducersProps) => {
-  // const { title, questions } = props.route.params;
-
+  // const { onFormUpdate } = props.route.params;
+  
   const { colors } = useTheme();
   const navigation = useNavigation();
-  const headerText = 'Voila! You can now edit the form. Please remember that you can always edit the form and come back again';
+  const headerText = 'Voilà! You can now edit the form. Please remember that you can always edit the form and come back again';
   const [isValidated, setIsValidated] = React.useState(true);
   const [errorText, setErrorText] = React.useState('');
   const [visible, setVisible] = React.useState(false);
+  const [editFormValue, setEditFormValue] = React.useState(props.state.authReducer.forms);
 
-
+  
+  const handleFormValue = (questions: Question[]) => {
+    setEditFormValue(questions);
+  }
+  
   return (      
       <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
         <View style={{...styles.headerContainer, ...{backgroundColor: colors.primary}}}>
@@ -36,7 +42,9 @@ const formA = (props: FormReducersProps) => {
         <ScrollView style={styles.scrollView}>
           <DForm
             title=''
-            questions={props.state.authReducer.forms}>
+            questions={props.state.authReducer.forms}
+            onFormValueEdited={handleFormValue}
+            >
           </DForm>
         </ScrollView>
         
@@ -45,16 +53,17 @@ const formA = (props: FormReducersProps) => {
             title="Add" 
             type={'contrast'} 
             isDisabled={!isValidated}
-            onPress={ () => submitForm()}/>
+            onPress={ () => setVisible(true)}/>
         </View>
   
   
         <Dialog.Container visible={visible}>
-          <Dialog.Title>Error</Dialog.Title>
+          <Dialog.Title>Submission</Dialog.Title>
           <Dialog.Description>
-            {errorText}
+            Are you sure you want to submit this form?
           </Dialog.Description>
-          <Dialog.Button label="Okay" onPress={() => { setVisible(false); }} />
+          <Dialog.Button label="Cancel" onPress={() => { setVisible(false); }} />
+          <Dialog.Button label="Okay" onPress={() => { setVisible(false); props.submitForms(editFormValue); }} />
         </Dialog.Container>
   
       </View>

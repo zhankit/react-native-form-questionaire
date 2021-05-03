@@ -16,9 +16,10 @@ const FormCart = (props: FormReducersProps) => {
   const navigation = useNavigation();
   const headerText = 'You may review all the components that are added earlier before checkout.';
 
-
-  const [errorText, setErrorText] = React.useState('');
-  const [visible, setVisible] = React.useState(false);
+  const [visible, setVisible] = React.useState({
+    deletion: false,
+    tbc: false,
+  });
   const [focusID, setFocusID] = React.useState('');
 
   const confirmList = () => {
@@ -26,11 +27,14 @@ const FormCart = (props: FormReducersProps) => {
   };
 
   const removeItems = (index: String) => {
-    
-    props.removeItems(index);
-    setVisible(false);    
-    if (props.state.authReducer.forms.length == 0 ) {
+
+    if (props.state.authReducer.size == 1 ) {
+      props.removeItems(index);
+      setVisible({ ...visible, deletion: false})
       navigation.goBack();
+    } else {
+      props.removeItems(index);
+      setVisible({ ...visible, deletion: false})
     }
   }
   
@@ -58,7 +62,7 @@ const FormCart = (props: FormReducersProps) => {
                       </View>
                       <View style={styles.editPaddingContainer}>
                         <TouchableOpacity
-                          onPress={ () => {}}>
+                          onPress={ () => { setVisible({ ...visible, tbc: true}); }}>
                           <ImageBackground
                             source={require('../../assets/images/vectors/pencil.png')}
                             style={styles.iconContainer} />
@@ -66,7 +70,7 @@ const FormCart = (props: FormReducersProps) => {
                       </View>
                       <View style={styles.deletePaddingContainer}>
                         <TouchableOpacity
-                          onPress={ () => { setFocusID(component.id); setVisible(true); }}>
+                          onPress={ () => { setFocusID(component.id); setVisible({ ...visible, deletion: true}); }}>
                           <ImageBackground
                             source={require('../../assets/images/vectors/trash.png')}
                             style={styles.iconContainer} />
@@ -78,13 +82,22 @@ const FormCart = (props: FormReducersProps) => {
         </View> 
       </ScrollView>
 
-      <Dialog.Container visible={visible}>
+      <Dialog.Container visible={visible.deletion}>
         <Dialog.Title>Confirm Deletion</Dialog.Title>
         <Dialog.Description>
           Are you sure you want to delete this item?
         </Dialog.Description>
-        <Dialog.Button label="Cancel" onPress={() => { setVisible(false)} } />
+        <Dialog.Button label="Cancel" onPress={() => { setVisible({ ...visible, deletion: false})} } />
         <Dialog.Button label="Ok" onPress={() => { removeItems(focusID); }} />
+      </Dialog.Container>
+
+
+      <Dialog.Container visible={visible.tbc}>
+        <Dialog.Title>Coming soon...</Dialog.Title>
+        <Dialog.Description>
+          Edit Features are not availbale yet. Be patients :D
+        </Dialog.Description>
+        <Dialog.Button label="Ok" onPress={() => { setVisible({ ...visible, tbc: false})} } />
       </Dialog.Container>
 
       <View style={styles.submitButtonContainer}>
