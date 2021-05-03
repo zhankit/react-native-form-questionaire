@@ -7,7 +7,6 @@ interface DToggleProps {
   title: string;
   value: any;
   required: boolean;
-  index?: number;
   validator: Function;
   onFormUpdate: Function;
   validatorMessage?: string;
@@ -16,15 +15,15 @@ interface DToggleProps {
 
 const DToggle = (props: DToggleProps) =>  {
   
-  const { id, title, index, required, value, placeholder, validator, validatorMessage, onFormUpdate} = props;
+  const { id, title, required, value, placeholder, validator, validatorMessage, onFormUpdate} = props;
 
-  const [toggleValue, settoggleValue] = useState(false);
+  const [toggleValue, settoggleValue] = useState(value);
   const [isValidate, setIsValidate] = useState(true);
 
   useEffect( () => {
     
-    onFormUpdate(index, toggleValue);
     setIsValidate(validator(toggleValue));
+    onFormUpdate(id, toggleValue, isValidate);
 
   }, [toggleValue, isValidate])
   

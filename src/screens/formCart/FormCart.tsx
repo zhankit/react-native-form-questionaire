@@ -26,12 +26,17 @@ const FormCart = (props: FormReducersProps) => {
   };
 
   const removeItems = (index: String) => {
-    
-    props.removeItems(index);
-    setVisible(false);    
-    if (props.state.authReducer.forms.length == 0 ) {
+
+    if (props.state.authReducer.size == 1 ) {
+      props.removeItems(index);
+      setVisible(false);  
       navigation.goBack();
+    } else {
+      props.removeItems(index);
+      setVisible(false);  
     }
+
+
   }
   
   return (

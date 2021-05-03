@@ -25,7 +25,7 @@ const DNumberInput = (props: DNumberInputProps) =>  {
   useEffect( () => {
     
     setIsValidate(validator(textValue));
-    onFormUpdate(index, textValue, isValidate);
+    onFormUpdate(id, textValue, isValidate);
 
   }, [textValue, isValidate])
   

@@ -8,7 +8,8 @@ const mapState = ( state: any ) => {
 
 const mapDispatch = {
     addItems: (formValue: Question) => ({ type: 'ADD_ITEMS', newItem: formValue }),
-    removeItems: (index: String) => ({ type: 'REMOVE_ITEMS', payload: index })
+    removeItems: (index: String) => ({ type: 'REMOVE_ITEMS', payload: index }),
+    submitForms: (formValue: Question) => ({ type: 'UPDATE_FORMS', newForm: formValue }),
 }
   
 const formConnector = connect(mapState, mapDispatch)

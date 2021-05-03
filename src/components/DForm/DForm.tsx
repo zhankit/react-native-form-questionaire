@@ -7,6 +7,7 @@ import DTextInput from '../DTextInput';
 import DNumberInput from '../DNumberInput';
 import DToggle from '../DToggle';
 import DButton from '../DButton';
+import { Question } from '../../interfaces/interfaces';
 
 interface DFormProps {
   title: string;
@@ -31,23 +32,18 @@ interface option {
 }
 
 const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
-  const { title, questions, ...rest } = props;
+  const { title, questions, onFormValueEdited, ...rest } = props;
 
   const [ questionsValue, setquestionsValue ] = React.useState(questions);
 
-  const handleForm = (index: number, value: string) => {
-    let questions = [...questionsValue];
-    let question = {
-      ...questions[index],
-      value: value
-    }
-    questions[index] = question;
+  const handleForm = (id: String, value: string) => {
+    let questions = questionsValue.map( (question: Question) => { 
+      if (question.id === id) return {...question, value: value}
+      else return {...question};
+    })
     setquestionsValue(questions);
+    onFormValueEdited(questions);
   }
-
-  const review = ( result: question[] ) => { 
-    console.log('question', result);
-  }  
 
   return (
     <View style={styles.ContainerStyle}>
@@ -56,12 +52,12 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
         .map( (question: question, index: number) => {
           switch( question.type ) {
             case 'Textfield':
-              return <View key={index} style={styles.questionContainer}>
+              return <View key={question.id} style={styles.questionContainer}>
                       <DTextInput 
+                        id={question.id}
                         key={question.id}
                         title={question.title} 
-                        index={index}
-                        value={""}
+                        value={question.value}
                         required={question.required ? true : false}
                         onFormUpdate={handleForm}
                         validator={question.validator}
@@ -71,12 +67,12 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
 
             case 'Numberfield':
-              return <View key={index} style={styles.questionContainer}>
+              return <View key={question.id} style={styles.questionContainer}>
                      <DNumberInput 
+                        id={question.id}
                         key={question.id}
                         title={question.title} 
-                        index={index}
-                        value={""}
+                        value={question.value}
                         required={question.required ? true : false}
                         onFormUpdate={handleForm}
                         />
@@ -84,13 +80,14 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
             
             case 'Toggle':
-              return <View key={index} style={styles.questionContainer}>
+              return <View key={question.id} style={styles.questionContainer}>
                      <DToggle 
+                        id={question.id}
                         key={question.id}
                         title={question.title} 
-                        index={index}
                         required={question.required ? true : false}
                         onFormUpdate={handleForm}
+                        value={question.value}
                         validator={question.validator}
                         validatorMessage={question.validatorMsg}
                         />
@@ -98,12 +95,13 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
 
             case 'Checkbox':
-              return  <View key={index} style={styles.questionContainer}>
+              return  <View key={question.id} style={styles.questionContainer}>
                       <DCheckbox 
+                        id={question.id}
                         key={question.id}
                         title={question.title} 
-                        index={index}
                         required={question.required ? true : false}
+                        value={question.value}
                         onFormUpdate={handleForm}
                         validator={question.validator}
                         validatorMessage={question.validatorMsg}
