@@ -31,13 +31,15 @@ const DToggle = (props: DToggleProps) =>  {
   return(
     <View style={styles.ContainerStyle}>
       <Switch 
-        trackColor={{ false: "#767577", true: "#81b0ff" }}
-        thumbColor={toggleValue ? "#f5dd4b" : "#f4f3f4"}
+        trackColor={{ false: "#767577", true: "#0D3B66" }}
+        thumbColor={toggleValue ? "#FAF0CA" : "#f4f3f4"}
         ios_backgroundColor="#3e3e3e"
         value={toggleValue}
         onValueChange={() => settoggleValue(!toggleValue)}
-        />  
-      <Text style={styles.TextStyle}>{title}</Text> 
+        />
+      <View style={styles.textContainer}>
+        <Text style={styles.TextStyle}>{title}</Text>
+      </View>
     </View>    
   );
 

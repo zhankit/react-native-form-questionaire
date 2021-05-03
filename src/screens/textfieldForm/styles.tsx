@@ -7,7 +7,8 @@ const styles = StyleSheet.create({
     scrollView: {
         backgroundColor: 'white',
         borderTopLeftRadius: 30, 
-        borderTopRightRadius: 30
+        borderTopRightRadius: 30,
+        marginHorizontal: 20
     },
     inputForm: { 
         paddingHorizontal: 40, 
@@ -15,11 +16,15 @@ const styles = StyleSheet.create({
     },
     buttonView: {
         backgroundColor: 'white',
-        paddingBottom: 20
+        paddingBottom: 20,
+        marginHorizontal: 20,
+        marginBottom: 20,
+        borderBottomLeftRadius: 30, 
+        borderBottomRightRadius: 30,
     },
     title: {
         fontWeight: "bold", 
-        fontSize: 24, 
+        fontSize: 24,  
         textAlign: 'justify', 
         color: 'black', 
         marginRight: 20

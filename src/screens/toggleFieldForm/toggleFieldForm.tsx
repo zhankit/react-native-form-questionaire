@@ -8,15 +8,16 @@ import { useTheme } from 'react-native-paper';
 import DTextInput from '../../components/DTextInput';
 import { FormReducersProps, formConnector } from '../../redux/actions/actions';
 import  { styles } from './styles';
+import uuid from 'react-native-uuid';
 
 const ToggleFieldForm = (props: FormReducersProps) => {
 
   const { colors } = useTheme();
   const navigation = useNavigation();
   const [formValue, setformValue] = React.useState({
-    id: '',
-    order: 0,
-    type: 'checkBox',
+    id: uuid.v4(),
+    order: props.state.authReducer.forms.length + 1,
+    type: 'Toggle',
     title: '',
     value: '',
     required: false,
@@ -49,6 +50,7 @@ const ToggleFieldForm = (props: FormReducersProps) => {
 
 
   const headerText = 'A toggle button allows the user to change a setting between two states. So, it is like how you switch on your light!';
+  
   return (
     <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
 

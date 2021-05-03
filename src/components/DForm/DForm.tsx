@@ -55,7 +55,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
       { questionsValue.sort( (a: question, b: question) => { return Number(a.order) - Number(b.order)})
         .map( (question: question, index: number) => {
           switch( question.type ) {
-            case 'textfield':
+            case 'Textfield':
               return <View key={index} style={styles.questionContainer}>
                       <DTextInput 
                         key={question.id}
@@ -70,7 +70,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
                       </View>;
               break;
 
-            case 'number':
+            case 'Numberfield':
               return <View key={index} style={styles.questionContainer}>
                      <DNumberInput 
                         key={question.id}
@@ -83,7 +83,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
                         </View>;
               break;
             
-            case 'toggle':
+            case 'Toggle':
               return <View key={index} style={styles.questionContainer}>
                      <DToggle 
                         key={question.id}
@@ -97,7 +97,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
                         </View>;
               break;
 
-            case 'checkbox':
+            case 'Checkbox':
               return  <View key={index} style={styles.questionContainer}>
                       <DCheckbox 
                         key={question.id}
@@ -112,10 +112,7 @@ const DForm = (props: { [x: string]: any; title: any; questions: any; }) =>  {
               break;
           }
       })}
-      <DButton 
-        title="Review"
-        isDisabled={false}
-        onPress={ () => review(questionsValue)}></DButton>
+     
     </View>
     );
 }

@@ -10,6 +10,7 @@ import TextfieldForm from '../screens/textfieldForm';
 import NumberfieldForm from '../screens/numberfieldForm';
 import ToggleFieldForm from '../screens/toggleFieldForm';
 import CheckboxForm from '../screens/checkboxForm';
+import FormCart from '../screens/formCart';
 
 const styles= StyleSheet.create({
   headerTextStyle: {
@@ -21,7 +22,6 @@ const styles= StyleSheet.create({
   }
 });
 
-// This is the state mapping
 interface NavigationProps {
   theme: Theme
 }
@@ -30,48 +30,44 @@ interface NavigationProps {
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
 const Navigation = ( props: NavigationProps ) => {
 
-  const Stack = createStackNavigator();
+  const MainStack = createStackNavigator();
+  const RootStack = createStackNavigator();
 
+  const MainStackScreen = () => {
+    return (
+      <MainStack.Navigator 
+        initialRouteName="Home" 
+        screenOptions={{
+          headerBackTitleVisible: false,
+          headerTintColor: props.theme.colors.text,
+          headerStyle: { backgroundColor: props.theme.colors.primary},
+          headerTitleStyle : styles.headerTextStyle
+        }}>
+        <MainStack.Screen name="Home" component={HomeScreen} options={{ title: 'Home' }}/>
+        <MainStack.Screen name="Form" component={form} options={{ title: '' }}/>
+        <MainStack.Screen name="FormCreation" component={FormCreation} options={{ title: 'Dynamic Form' }}/>
+        <MainStack.Screen name="FormCart" component={FormCart} options={{ title: 'Forms Cart' }}/>
+      </MainStack.Navigator>
+    )
+  }
   return (
-  <NavigationContainer theme={props.theme}>
-    <Stack.Navigator 
-      initialRouteName="Home" 
-      screenOptions={{
-        headerBackTitleVisible: false,
-        headerTintColor: props.theme.colors.text,
-        headerStyle: { backgroundColor: props.theme.colors.primary},
-        headerTitleStyle : styles.headerTextStyle
-      }}>
-      <Stack.Screen 
-        name="Home" 
-        component={HomeScreen}
-        options={{ title: 'Home' }}/>
-      <Stack.Screen 
-        name="form" 
-        component={form} 
-        options={{ title: '' }}/>
-      <Stack.Screen 
-        name="FormCreation" 
-        component={FormCreation}
-         options={{ title: 'Dynamic Form' }}/>
-      <Stack.Screen 
-        name="TextfieldForm" 
-        component={TextfieldForm}
-         options={{ title: '' }}/>
-      <Stack.Screen 
-        name="NumberfieldForm" 
-        component={NumberfieldForm}
-         options={{ title: '' }}/>
-      <Stack.Screen 
-        name="ToggleFieldForm" 
-        component={ToggleFieldForm}
-         options={{ title: '' }}/>
-      <Stack.Screen 
-        name="CheckboxForm" 
-        component={CheckboxForm}
-         options={{ title: '' }}/>
-    </Stack.Navigator>
-  </NavigationContainer>
+    <NavigationContainer theme={props.theme}>
+      <RootStack.Navigator 
+        mode="modal"
+        initialRouteName="Home" 
+        screenOptions={{
+          headerBackTitleVisible: false,
+          headerTintColor: props.theme.colors.text,
+          headerStyle: { backgroundColor: props.theme.colors.primary},
+          headerTitleStyle : styles.headerTextStyle
+        }}>
+        <RootStack.Screen name="Home" component={MainStackScreen} options={{ headerShown: false }}/>
+        <RootStack.Screen name="TextfieldForm" component={TextfieldForm} options={{ title: '' }}/>
+        <RootStack.Screen name="NumberfieldForm" component={NumberfieldForm} options={{ title: '' }}/>
+        <RootStack.Screen name="ToggleFieldForm" component={ToggleFieldForm} options={{ title: '' }}/>
+        <RootStack.Screen name="CheckboxForm" component={CheckboxForm} options={{ title: '' }}/>
+      </RootStack.Navigator>
+    </NavigationContainer>
   );
 }
 

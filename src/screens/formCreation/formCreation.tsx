@@ -38,11 +38,13 @@ const FormCreation = (props: FormReducersProps) => {
       navigationPage: (option: any) => { navigation.navigate('ToggleFieldForm', { option: option, title: ""})}
     }
   ];
+
   const [questions, setQuestion] = React.useState([] as any);
   const confirmList = () => {
-    navigation.navigate('form', { questions: questions, title: "Custom Form"});
+    navigation.navigate('FormCart', { questions: questions, title: "Custom Form"});
   };
   const headerText = 'This simple dynamic form is useful where you can create the new forms on the fly without changing the application code.';
+
   return (
     <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
       <View style={styles.headerWrapper}>
@@ -75,10 +77,10 @@ const FormCreation = (props: FormReducersProps) => {
       <View style={styles.submitButtonContainer}>
         <DButton 
           leftTitle={props.state.authReducer.forms.length.toString()} 
-          isDisabled={false} 
+          isDisabled={props.state.authReducer.forms.length == 0} 
           title="REVIEW" 
           type={'contrast'} 
-          onPress={ () => addItem()}/>
+          onPress={ () => confirmList()}/>
       </View>
     </View>
     );

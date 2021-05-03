@@ -8,15 +8,16 @@ import { useTheme } from 'react-native-paper';
 import DTextInput from '../../components/DTextInput';
 import { FormReducersProps, formConnector } from '../../redux/actions/actions';
 import  { styles } from './styles';
+import uuid from 'react-native-uuid';
 
 const CheckboxForm = (props: FormReducersProps) => {
 
   const { colors } = useTheme();
   const navigation = useNavigation();
   const [formValue, setformValue] = React.useState({
-    id: '',
-    order: 0,
-    type: 'checkBox',
+    id: uuid.v4(),
+    order: props.state.authReducer.forms.length + 1,
+    type: 'Checkbox',
     title: '',
     value: '',
     required: false,
