@@ -11,10 +11,10 @@ import  { styles } from './styles';
 import uuid from 'react-native-uuid';
 
 const CheckboxForm = (props: FormReducersProps) => {
-
+  // console.log('props', props.route.params.form);
   const { colors } = useTheme();
   const navigation = useNavigation();
-  const [formValue, setformValue] = React.useState({
+  const [formValue, setformValue] = React.useState( props.route.params.isEdit ? props.route.params.form :{
     id: uuid.v4(),
     order: props.state.authReducer.forms.length + 1,
     type: 'Checkbox',
@@ -44,8 +44,15 @@ const CheckboxForm = (props: FormReducersProps) => {
       return;
     }
 
-    props.addItems(formValue);
-    navigation.goBack();
+    if (props.route.params.isEdit) {
+      props.editItems(formValue);
+      navigation.goBack();
+    } else {
+      props.addItems(formValue);
+      navigation.goBack();
+    }
+
+
   }
 
 

@@ -37,6 +37,18 @@ const FormCart = (props: FormReducersProps) => {
       setVisible({ ...visible, deletion: false})
     }
   }
+
+  const editEntry = (component: Question) => {
+    console.log('wala', component);
+    try {
+      if (component.type === 'Checkbox') navigation.navigate('CheckboxForm', { form: component, isEdit: true, title: "Edit"});
+      else if (component.type === 'Numberfield') navigation.navigate('NumberfieldForm', { form: component, isEdit: true, title: "Edit"});
+      else if (component.type === 'Textfield') navigation.navigate('TextfieldForm', { form: component, isEdit: true, title: "Edit"});
+      else if (component.type === 'Toggle') navigation.navigate('ToggleFieldForm', { form: component, isEdit: true, title: "Edit"});
+    } catch(e) {
+      console.log('errror', e);
+    }
+  } 
   
   return (
     <View style={{...styles.container, ...{backgroundColor: colors.primary}}}>
@@ -62,7 +74,7 @@ const FormCart = (props: FormReducersProps) => {
                       </View>
                       <View style={styles.editPaddingContainer}>
                         <TouchableOpacity
-                          onPress={ () => { setVisible({ ...visible, tbc: true}); }}>
+                          onPress={ () => editEntry(component)}>
                           <ImageBackground
                             source={require('../../assets/images/vectors/pencil.png')}
                             style={styles.iconContainer} />

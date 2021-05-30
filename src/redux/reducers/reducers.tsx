@@ -2,8 +2,12 @@ import { Question } from "../../interfaces/interfaces";
 
 const initialUserState = {
     forms: [],
-    size: 0
+    size: 0,
+    joke: {},
+    loading: false
 }
+
+
 
 const formReducers = (state = initialUserState, action: any) => {
     switch (action.type) {
@@ -13,6 +17,16 @@ const formReducers = (state = initialUserState, action: any) => {
             forms: [...state.forms, action.newItem],
             size: state.size + 1
          }
+        case 'EDIT_ITEMS':
+          console.log('action.newItem', action.newItem);
+          return { 
+              ...state,
+              forms: state.forms.map( (item: Question) => {
+                if (action.newItem.id === item.id) {return { ...action.newItem }}
+                else { return {...item}}
+              }),
+              size: state.size
+           }
       case 'REMOVE_ITEMS':
         // TODO: Check efficiently or better way
         return { 
@@ -29,6 +43,11 @@ const formReducers = (state = initialUserState, action: any) => {
         }
       case 'FORMS_LENGTH':
         return state.forms.length
+      case 'GET_JOKES':
+          console.log('loading?');
+          return { ...state, loading: true };
+      case 'JOKE_RECEIVED':
+          return { ...state, joke: action.json, loading: false }
       default:
         return state;
     }

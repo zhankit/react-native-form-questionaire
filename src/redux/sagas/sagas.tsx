@@ -1,15 +1,26 @@
-// import { call, put, fork, takeEvery } from "redux-saga/effects";
+import { put, takeLatest, all } from 'redux-saga/effects';
 
-// export function* helloSaga() {
-//   // console.log('Hello Sagas!')
-// }
 
-// // export function* callSubmit(action){
-// //   // const result = yield call(submitServer, action.data);
-// //   console.log(result);
-// //   if (result.error) {
-// //     yield put({ type: 'REQUEST_FAILED'})
-// //   } else {
-// //     yield put({ type: 'REQUEST_SUCCESFUL'})
-// //   }
-// // }
+export function* helloSaga() {
+  console.log('Hello Sagas!')
+}
+
+function* fetchJokes() {
+  const json = yield fetch('https://official-joke-api.appspot.com/random_joke')
+        .then( (response: any) => {
+          console.log('response', response);
+          response.json();
+      } );    
+  yield put({ type: "JOKE_RECEIVED", json: Object.keys(json) });
+}
+
+function* actionWatcher() {
+     yield takeLatest('GET_JOKES', fetchJokes)
+}
+
+export default function* rootSaga() {
+   yield all([
+    helloSaga(),  
+    actionWatcher(),
+  ]);
+}
