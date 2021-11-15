@@ -1,6 +1,6 @@
 # Basic set up for three package managers
 
-version: 1
+version: 2
 updates:
 
   # Maintain dependencies for npm
