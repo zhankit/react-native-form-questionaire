@@ -8,7 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "@material-ui/core": "^4.11.4",
+    "@material-ui/core": "^4.12.3",
     "@react-native-community/checkbox": "^0.5.7",
     "@react-native-community/picker": "^1.8.1",
     "@react-navigation/native": "^5.9.4",
