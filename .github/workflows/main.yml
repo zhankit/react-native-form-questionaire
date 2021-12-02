@@ -26,6 +26,8 @@ jobs:
         # You may pin to the exact commit or the version.
         # uses: peterjgrainger/action-create-branch@b48b0ca0e307c9b56f059b70274984ffeaa90a43
         uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           # The branch to create
           branch: release/${{ github.event.inputs.version_name }}
