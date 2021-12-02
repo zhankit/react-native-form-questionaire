@@ -1,4 +1,5 @@
 # This is a basic workflow to help you get started with Actions
+name: RC Release 
 
 # Controls when the workflow will run
 on:
@@ -15,16 +16,26 @@ on:
         description: 'Confleunce Release note URL'
         required: true
         
-
-name: RC Release - ${{ github.event.inputs.version_name }}
-
+# Workflow
 jobs:
   build:
     name: RC Release
     runs-on: ubuntu-latest
     steps:
+      # 1. Check out Code
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      # 3. Check out Code
+      - name: Create Branch
+        uses: peterjgrainger/action-create-branch@v2.0.1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        with:
+          # The branch to create
+          branch: release/${{ github.event.inputs.version_name }}
+        
+      # 2. Create Release with details
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
