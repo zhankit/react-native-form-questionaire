@@ -25,21 +25,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
-      - name: Echo site details
-        env:
-          SITE: ${{ matrix.site }}
-          DATACENTER: ${{ matrix.datacenter }}
-        run: 
-          #!/bin/bash
-
-          # current Git branch
-          branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
-          git checkout $masterBranch
-          masterBranch=$branch
-          git checkout $masterBranch
-          
-
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
