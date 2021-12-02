@@ -35,16 +35,10 @@ jobs:
 
           # current Git branch
           branch=$(git symbolic-ref HEAD | sed -e 's,.*/\(.*\),\1,')
-
-          # current project name
-          projectName=$(git config --local remote.origin.url|sed -n 's#.*/\([^.]*\)\.git#\1#p')
-
-          # establish master branch name variables
-          masterBranch=$branch
-
-          # checkout to master branch, this will break if the user has uncommited changes
           git checkout $masterBranch
-
+          masterBranch=$branch
+          git checkout $masterBranch
+          
 
       - name: Create Release
         id: create_release
