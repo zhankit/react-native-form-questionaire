@@ -11,6 +11,9 @@ on:
       release_thread_id:
         description: 'ID of the release discussion thread on the repo'
         required: true
+      conflunece_release_note:
+        description: 'Confleunce Release note URL'
+        required: true
         
 
 name: RC Release
@@ -22,12 +25,15 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Create RC Branch
-        uses: peterjgrainger/action-create-branch@v2.0.1
+        
+      - name: Echo site details
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions, you do not need to create your own token
-        with:
-          branch: release/${{ github.event.inputs.version_name }}
+          SITE: ${{ matrix.site }}
+          DATACENTER: ${{ matrix.datacenter }}
+        run: 
+          git checkout -b release/${{ github.event.inputs.version_name }}
+          git tag release-${{ github.event.inputs.version_name }}
+          git push --tags origin release/${{ github.event.inputs.version_name }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -38,10 +44,10 @@ jobs:
           tag_name: release-${{ github.event.inputs.version_name }}
           release_name: v${{ github.event.inputs.version_name }}
           body: |
-            Release notes
-            {link from confluence note}
+            Release notes:
+            ${{ github.event.inputs.conflunece_release_note }}
             
-            Release thread
+            Release thread:
             https://github.com/MoneyLion/mobile-app/discussions/${{ github.event.inputs.release_thread_id }}
           draft: true
           prerelease: false
