@@ -26,7 +26,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         
-      # 3. Check out Code
+      # 2. Check out Branch
       - name: Create Branch
         uses: peterjgrainger/action-create-branch@v2.0.1
         env:
@@ -35,7 +35,7 @@ jobs:
           # The branch to create
           branch: release/${{ github.event.inputs.version_name }}
         
-      # 2. Create Release with details
+      # 3. Create Release with details
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
