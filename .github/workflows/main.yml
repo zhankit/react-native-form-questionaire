@@ -10,6 +10,10 @@ on:
       release_thread_id:
         description: 'ID of the release discussion thread on the repo'
         required: true
+  push:
+    # Sequence of patterns matched against refs/tags
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 name: Create Release
 
