@@ -16,7 +16,7 @@ on:
         required: true
         
 
-name: RC Release
+name: RC Release - ${{ github.event.inputs.version_name }}
 
 jobs:
   build:
@@ -32,6 +32,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           repository: release/${{ github.event.inputs.version_name }}
+          target: release/${{ github.event.inputs.version_name }}
           tag_name: release-${{ github.event.inputs.version_name }}
           release_name: v${{ github.event.inputs.version_name }}
           body: |
