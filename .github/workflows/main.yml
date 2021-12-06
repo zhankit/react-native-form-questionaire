@@ -54,3 +54,13 @@ jobs:
             https://github.com/MoneyLion/mobile-app/discussions/${{ github.event.inputs.release_thread_id }}
           draft: true
           prerelease: false
+          
+      # Checkout from master
+      - name: Checkout from master
+        run: |
+          date > generated.txt
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "generated"
+          git push
