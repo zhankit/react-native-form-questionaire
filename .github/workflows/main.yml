@@ -61,6 +61,7 @@ jobs:
           
       # Checkout from master
       - name: Checkout from master
+        shell: bash
         run: |
           echo;
           pwd;
