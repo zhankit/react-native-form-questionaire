@@ -63,7 +63,10 @@ jobs:
       - name: Checkout from master
         shell: bash
         run: |
-          # Update the version of the 
+          #!/usr/bin/env bash
+          
+          echo `pwd`
+          # Update the version
           REPLACE_ANDROID_VERSION_REGEX='s/versionName "${{ github.event.inputs.prev_version_name }}"/versionName "${{ github.event.inputs.version_name }}"/'
           sed $REPLACE_ANDROID_VERSION_REGEX ./android/app/build.gradle > build.gradle.tmp && mv build.gradle.tmp ./android/app/build.gradle
           
