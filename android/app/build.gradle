@@ -1,0 +1,287 @@
+apply plugin: "com.android.application"
+apply plugin: 'com.google.gms.google-services'
+com.google.gms.googleservices.GoogleServicesPlugin.config.disableVersionCheck = true
+import com.android.build.OutputFile
+
+project.ext.react = [
+    nodeExecutableAndArgs : ["/usr/local/bin/node"],
+    inputExcludes: [
+        "ios/**",
+        "node_modules/react-native-branch/examples/**",
+        "node_modules/react-native-branch/native-tests/**"
+    ],
+    enableHermes: false,  // clean and rebuild if changing
+	entryFile: "index.ts",
+	extraPackagerArgs: ["--sourcemap-output", "$buildDir/generated/sourcemaps/android-embrace.bundle.map"]
+]
+
+apply from: "../../node_modules/react-native/react.gradle"
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
+/**
+ * The preferred build flavor of JavaScriptCore.
+ *
+ * For example, to use the international variant, you can use:
+ * `def jscFlavor = 'org.webkit:android-jsc-intl:+'`
+ *
+ * The international variant includes ICU i18n library and necessary data
+ * allowing to use e.g. `Date.toLocaleString` and `String.localeCompare` that
+ * give correct results when using with locales other than en-US.  Note that
+ * this variant is about 6MiB larger per architecture than default.
+ */
+def jscFlavor = 'org.webkit:android-jsc:+'
+
+/**
+ * Whether to enable the Hermes VM.
+ *
+ * This should be set on project.ext.react and mirrored here.  If it is not set
+ * on project.ext.react, JavaScript will not be compiled to Hermes Bytecode
+ * and the benefits of using Hermes will therefore be sharply reduced.
+ */
+def enableHermes = project.ext.react.get("enableHermes", false);
+
+repositories {
+    google()
+    mavenCentral()
+    maven { url 'https://zendesk.jfrog.io/zendesk/repo' }
+    maven { url "https://www.jitpack.io" }
+}
+
+android {
+    dexOptions {
+        javaMaxHeapSize "4g" //enlarge heap size value.
+        jumboMode = true
+    }
+
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    ndkVersion rootProject.ext.ndkVersion
+
+    compileSdkVersion rootProject.ext.compileSdkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "com.moneylion"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionName "7.39.0"
+        versionCode 2020397333
+
+        missingDimensionStrategy 'react-native-camera', 'general'
+        multiDexEnabled true
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a", "x86", "x86_64"
+            moduleName "store_jni"
+            cFlags "-std=c99"
+        }
+        resValue "string", "build_config_package", "com.moneylion"
+    }
+
+	configurations.all {
+        resolutionStrategy {
+            force "com.facebook.soloader:soloader:0.8.2"
+			/**
+			 * When using React Native version <= 0.64.0 there is a dependency conflict with
+			 * okhttp3 on Android that can cause requests from outside of the Onfido SDK to fail.
+             * https://github.com/onfido/react-native-sdk#44-fix-dependency-conflict-between-react-native-and-onfido-android-sdk
+			 */
+            eachDependency { DependencyResolveDetails details ->
+                if (!details.requested.name.contains('onfido')) {
+                    if (details.requested.group == 'com.squareup.okhttp3') {
+                        details.useVersion '4.9.0'
+                    }
+                }
+            }
+        }
+    }
+
+    signingConfigs {
+        release {
+            def Properties localProps = new Properties()
+            localProps.load(new FileInputStream(file('../local.properties')))
+
+            storeFile file(ML_RELEASE_STORE_FILE)
+            storePassword localProps['ML_RELEASE_STORE_PASSWORD']
+            keyAlias ML_RELEASE_KEY_ALIAS
+            keyPassword localProps['ML_RELEASE_KEY_PASSWORD']
+        }
+    }
+
+    buildTypes {
+        release {
+            //shrinkResources true
+            minifyEnabled false
+            debuggable false
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+			// see https://reactnative.dev/docs/signed-apk-android.
+            signingConfig signingConfigs.release
+            shrinkResources false
+        }
+    }
+
+    packagingOptions {
+        pickFirst "lib/armeabi-v7a/libc++_shared.so"
+        pickFirst "lib/arm64-v8a/libc++_shared.so"
+        pickFirst "lib/x86/libc++_shared.so"
+        pickFirst "lib/x86_64/libc++_shared.so"
+        exclude "META-INF/com.google.dagger_dagger.version"
+    }
+
+	bundle {
+        language {
+            // since we do not support multi language now
+            enableSplit = false
+        }
+        density {
+            enableSplit = true
+        }
+        abi {
+            enableSplit = true
+        }
+    }
+
+    flavorDimensions "ml"
+
+    productFlavors {
+        full {
+            dimension "ml"
+            applicationId "com.moneylion"
+            manifestPlaceholders.branchTestMode = false
+            manifestPlaceholders.branchDefaultLinkDomain = "bnc.lt"
+            manifestPlaceholders.branchAlternateLinkDomain = "bnc.lt"
+        }
+        beta {
+            dimension "ml"
+            applicationId "com.moneylion.beta"
+            manifestPlaceholders.branchTestMode = true
+            manifestPlaceholders.branchDefaultLinkDomain = "0pa9.test-app.link"
+            manifestPlaceholders.branchAlternateLinkDomain = "0pa9-alternate.test-app.link"
+        }
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path file('src/main/jni/Android.mk')
+        }
+    }
+}
+
+dependencies {
+    implementation project(':react-native-text-gradient')
+    implementation project(':react-native-share')
+
+    implementation project(':react-native-plaid-link-sdk')
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "com.facebook.react:react-native:+"
+
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
+      exclude group:'com.facebook.fbjni'
+    }
+    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+		exclude group:'com.squareup.okhttp3', module:'okhttp'
+    }
+    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}") {
+        exclude group:'com.facebook.flipper'
+    }
+
+    implementation('io.socket:socket.io-client:1.0.0') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
+    implementation 'com.facebook.fresco:fresco:2.0.0'
+    implementation 'com.facebook.fresco:animated-gif:2.0.0'
+
+    implementation 'com.google.firebase:firebase-core:16.0.9'
+    implementation 'com.google.firebase:firebase-messaging:20.3.0'
+    implementation 'com.google.firebase:firebase-perf:17.0.2'
+    implementation 'com.google.firebase:firebase-config:17.0.0'
+
+    implementation 'com.google.android.gms:play-services-gcm:16.0.0'
+    implementation 'com.google.android.gms:play-services-base:16.0.1'
+    implementation 'com.google.android.gms:play-services-basement:16.1.0'
+    implementation 'com.google.android.gms:play-services-location:16.0.0'
+    implementation 'com.google.android.gms:play-services-tasks:16.0.1'
+
+    implementation 'com.android.installreferrer:installreferrer:2.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'androidx.browser:browser:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0'
+    implementation 'com.android.volley:volley:1.1.1'
+
+    implementation 'com.appsflyer:segment-android-integration:6.1.1'
+    implementation 'com.segment.analytics.android:analytics:4.9.3'
+    implementation 'com.amplitude:android-sdk:2.31.3'
+    implementation 'com.segment.analytics.android.integrations:amplitude:3.0.3'
+    implementation 'com.usebutton:android-sdk:6.29.1'
+
+    implementation project(':react-native-charts-wrapper')
+
+    implementation group: 'com.zendesk', name: 'support', version: '3.0.3'
+    implementation 'com.iterable:iterableapi:3.3.1'
+
+	implementation 'com.google.android.gms:play-services-tapandpay:17.0.1'
+
+    implementation ('co.ujet.android:ujet-markdown-android:1.0.0')
+    implementation 'co.ujet.android:ujet-android:0.39.0'
+
+	//Android dependencies required by Ingo Money SDK
+	implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+	implementation 'androidx.percentlayout:percentlayout:1.0.0'
+	implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+
+	//Third party dependencies required by Ingo Money SDK
+	implementation 'com.nineoldandroids:library:2.4.0'
+	implementation 'org.greenrobot:eventbus:3.2.0'
+	implementation 'com.romandanylyk:pageindicatorview:1.0.1'
+	implementation "org.apache.commons:commons-imaging:1.0-alpha2"
+	implementation 'com.karumi:dexter:6.2.1' // this dependency was undocumented
+
+	//Ingo Money SDK AAR Files
+	implementation (name: 'ingo-image-processor-android-release', ext: 'aar')
+	implementation (name: 'ingo-image-processor-android-video-release', ext: 'aar')
+	implementation (name: 'api-release', ext:'aar')
+	implementation (name: 'misnapscience-release', ext:'aar')
+	implementation (name: 'misnapcamera-release', ext:'aar')
+	implementation (name: 'misnapscience-release', ext:'aar')
+	implementation (name: 'mibidata-release', ext:'aar')
+	implementation (name: 'imageutils-release', ext:'aar')
+	implementation (name: 'misnapcontroller-release', ext:'aar')
+	implementation (name: 'misnapworkflow_UX2_ingo-release', ext:'aar')
+	implementation (name: 'fraudforce-lib-4.2.0-release', ext:'aar')
+	implementation (name: 'sdk-ingo-release', ext:'aar')
+
+	// Kustomer
+	implementation 'com.kustomer.chat:ui:2.9.0'
+
+    if (enableHermes) {
+        def hermesPath = "../../node_modules/hermes-engine/android/";
+        debugImplementation files(hermesPath + "hermes-debug.aar")
+        releaseImplementation files(hermesPath + "hermes-release.aar")
+    } else {
+        implementation jscFlavor
+    }
+}
+
+// Run this once to be able to run the application with BUCK
+// puts all compile dependencies into folder libs for BUCK to use
+task copyDownloadableDepsToLibs(type: Copy) {
+    from configurations.compile
+    into 'libs'
+}
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+apply from: "../../node_modules/react-native-code-push/android/codepush.gradle"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
+apply plugin: 'com.android.application'
+apply plugin: 'embrace-swazzler'
