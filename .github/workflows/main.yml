@@ -64,12 +64,12 @@ jobs:
         shell: bash
         run: |
           # Update the version of the 
-          REPLACE_ANDROID_VERSION_REGEX='s/versionName "${{ github.event.inputs.prev_version_name }}"/versionName "${{ github.event.inputs.version_name }}/'
-          sed $REPLACE_VERSION_REGEX ./android/app/build.gradle > build.gradle.tmp && mv build.gradle.tmp ./android/app/build.gradle
+          REPLACE_ANDROID_VERSION_REGEX='s/versionName "${{ github.event.inputs.prev_version_name }}"/versionName "${{ github.event.inputs.version_name }}"/'
+          sed $REPLACE_ANDROID_VERSION_REGEX ./android/app/build.gradle > build.gradle.tmp && mv build.gradle.tmp ./android/app/build.gradle
           
           REPLACE_IOS_VERSION_REGEX='s/MARKETING_VERSION = ${{ github.event.inputs.prev_version_name }}/MARKETING_VERSION = ${{ github.event.inputs.version_name }}/'
           sed $REPLACE_IOS_VERSION_REGEX ./ios/MoneyLion.xcodeproj/project.pbxproj > project.pbxproj.tmp && mv project.pbxproj.tmp ./ios/MoneyLion.xcodeproj/project.pbxproj
 
           git add .
-          git commit -m "Bump Version "
+          git commit -m "Bump Up ApplicationVersion "
           git push
