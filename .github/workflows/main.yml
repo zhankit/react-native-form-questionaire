@@ -7,11 +7,11 @@ on:
     inputs:
       prev_version_name:
         # i.e. v2.9.0, v7.39.0-rc1
-        description: 'Version of the Previous Version'
+        description: 'Current Application Version'
         required: true
       version_name:
         # i.e. v3.0.0, v7.39.0-rc1
-        description: 'Version of the release candidate build (RC)'
+        description: 'Release candidate build (RC) version'
         required: true
       release_thread_id:
         description: 'ID of the release discussion thread on the repo'
@@ -74,5 +74,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Bump Up Application Version "
+          git commit -m "Bump up application version number"
           git push
