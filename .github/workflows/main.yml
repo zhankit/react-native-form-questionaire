@@ -7,11 +7,11 @@ on:
     inputs:
       prev_version_name:
         # i.e. v2.9.0, v7.39.0-rc1
-        description: 'Current Application Version'
+        description: 'Current application version'
         required: true
       version_name:
         # i.e. v3.0.0, v7.39.0-rc1
-        description: 'Release candidate build (RC) version'
+        description: 'Release candidate (RC) version'
         required: true
       release_thread_id:
         description: 'ID of the release discussion thread on the repo'
