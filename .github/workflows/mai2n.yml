@@ -22,7 +22,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
-      - uses: MLH-Fellowship/create-standup-discussions@v1.x
+      - uses: MLH-Fellowship/create-standup-discussions@v1.0.1
         env:
           GITHUB_TOKEN: ${{ secrets.GH_ORGANIZATION_TOKEN }}
         with:
