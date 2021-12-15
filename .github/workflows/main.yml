@@ -74,5 +74,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
-          git commit -m "Bump up application version number"
+          git commit -m "Bump app version number to ${{ github.event.inputs.version_name }}"
           git push
