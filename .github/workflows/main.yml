@@ -67,9 +67,9 @@ jobs:
           
           echo `pwd`
           # Update the version
-          sed -i "" 's/versionName "${{ github.event.inputs.prev_version_name }}"/versionName "${{ github.event.inputs.version_name }}"/g' ./android/app/build.gradle 
+          sed -i 's/versionName "${{ github.event.inputs.prev_version_name }}"/versionName "${{ github.event.inputs.version_name }}"/g' ./android/app/build.gradle 
           
-          sed -i "" 's/MARKETING_VERSION = ${{ github.event.inputs.prev_version_name }}/MARKETING_VERSION = ${{ github.event.inputs.version_name }}/g' ./ios/MoneyLion.xcodeproj/project.pbxproj 
+          sed -i 's/MARKETING_VERSION = ${{ github.event.inputs.prev_version_name }}/MARKETING_VERSION = ${{ github.event.inputs.version_name }}/g' ./ios/MoneyLion.xcodeproj/project.pbxproj 
 
           git config user.name github-actions
           git config user.email github-actions@github.com
