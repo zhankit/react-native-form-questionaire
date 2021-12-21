@@ -78,7 +78,12 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Bump app version number to ${{ github.event.inputs.new_staging_version_name }}"
-          git push
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
           
       # 4. Automatically Rollback if failed
       - name: Rollback Release
