@@ -49,7 +49,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           repository: release/${{ github.event.inputs.rc_version_name }}
-          release_branch: release/${{ github.event.inputs.rc_version_name }}
+          commitish: release/${{ github.event.inputs.rc_version_name }}
           tag_name: release/${{ github.event.inputs.rc_version_name }}
           release_name: v${{ github.event.inputs.rc_version_name }}
           body: |
