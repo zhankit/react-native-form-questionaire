@@ -95,5 +95,7 @@ jobs:
         with:
           # Using a known release ID
           id: ${{ steps.create_release.id }}
+          
+          tag: ${{ steps.autotagger.outputs.tagname }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
