@@ -89,20 +89,6 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.RELEASE_TOKEN }}
           branch: ${{ github.ref }}
-          
-      # 4. Automatically Rollback if failed
-      - name: Rollback Release
-        if: failure()
-        uses: author/action-rollback@stable
-        with:
-          # Using a known release ID
-          id: ${{ steps.create_release.id }}
-          
-          tag: release/${{ github.event.inputs.rc_version_name }}
-          
-          #  If the release does not exist but the tag does, setting this to true will remove the tag.
-          delete_orphan_tag: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        
