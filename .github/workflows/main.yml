@@ -32,7 +32,7 @@ jobs:
         env:
           SUPER_SECRET: ${{ secrets.RELEASE_TOKEN }}
         run: |
-          example-command "$RELEASE_TOKEN"
+          echo "$RELEASE_TOKEN"
           
       # 1. Check out Code
       - name: Checkout code
