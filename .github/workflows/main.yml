@@ -89,7 +89,7 @@ jobs:
       - name: Push changes
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.RELEASE_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
           
       # 4. Automatically Rollback if failed
@@ -105,4 +105,4 @@ jobs:
           #  If the release does not exist but the tag does, setting this to true will remove the tag.
           delete_orphan_tag: true
         env:
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
