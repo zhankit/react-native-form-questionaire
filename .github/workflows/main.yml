@@ -80,6 +80,11 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m "Bump app version number to ${{ github.event.inputs.new_staging_version_name }}"
+      
+      - name: Testing
+        shell: bash
+        run: |
+          echo ${{ secrets.RELEASE_TOKEN }}
           
       - name: Push changes
         uses: ad-m/github-push-action@master
