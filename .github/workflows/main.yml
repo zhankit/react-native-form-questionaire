@@ -40,14 +40,6 @@ jobs:
         with:
           # The branch to create
           branch: release/${{ github.event.inputs.rc_version_name }}
-      
-      # 3. Create a tag
-      - name: Tag
-        id: autotagger
-        uses: butlerlogic/action-autotag@stable
-        with:
-          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-          TAGNAME: release-${{ github.event.inputs.rc_version_name }}
         
       # 3. Create Release with details
       - name: Create Release
@@ -58,7 +50,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           repository: release/${{ github.event.inputs.rc_version_name }}
-          target: release/${{ github.event.inputs.rc_version_name }}
+          release_branch: release/${{ github.event.inputs.rc_version_name }}
           tag_name: ${{ steps.autotagger.outputs.tagname }}
           release_name: v${{ github.event.inputs.rc_version_name }}
           body: |
