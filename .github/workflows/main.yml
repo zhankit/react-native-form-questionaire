@@ -85,6 +85,7 @@ jobs:
         shell: bash
         run: |
           echo ${{ secrets.RELEASE_TOKEN }}
+          echo ${{ secrets.GITHUB_TOKEN }}
           
       - name: Push changes
         uses: ad-m/github-push-action@master
