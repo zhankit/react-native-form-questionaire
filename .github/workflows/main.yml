@@ -52,13 +52,14 @@ jobs:
       # 3. Create Release with details
       - name: Create Release
         id: create_release
+        if: steps.autotagger.outputs.tagname != ''
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         with:
           repository: release/${{ github.event.inputs.rc_version_name }}
           target: release/${{ github.event.inputs.rc_version_name }}
-          tag_name: release-${{ github.event.inputs.rc_version_name }}
+          tag_name: ${{ steps.autotagger.outputs.tagname }}
           release_name: v${{ github.event.inputs.rc_version_name }}
           body: |
             Release notes:
