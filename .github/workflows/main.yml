@@ -28,6 +28,12 @@ jobs:
     name: RC Release Cutoff
     runs-on: ubuntu-latest
     steps:
+      - shell: bash
+        env:
+          SUPER_SECRET: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          example-command "$RELEASE_TOKEN"
+          
       # 1. Check out Code
       - name: Checkout code
         uses: actions/checkout@v2
