@@ -68,7 +68,7 @@ android {
         applicationId "com.moneylion"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionName "7.43.1"
+        versionName "7.43.2"
         versionCode 2020397333
 
         missingDimensionStrategy 'react-native-camera', 'general'
