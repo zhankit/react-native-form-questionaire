@@ -27,6 +27,7 @@ jobs:
   build:
     name: RC Release Cutoff
     runs-on: ubuntu-latest
+    environment: Actions
     steps:
       - shell: bash
         env:
