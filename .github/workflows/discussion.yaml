@@ -19,6 +19,24 @@
      name: 'To create new discussion for RC'
      runs-on: ubuntu-latest
      steps:
+       # 1. Get the repo id
+       - uses: octokit/graphql-action@v2.x
+         id: get_repo_id
+         with:
+           query: |
+             query {
+               repository(owner:$owner, name:$repo) {
+                 id
+               }
+             }
+           owner: "zhankit"
+           repo: ${{ github.event.repository.name }}
+           discussion_number: ${{ github.event.inputs.release_thread_id }}
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+       - run: "echo api response: ${{ steps.get_repo_id.outputs.data }}"
+     
+       # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
          with:
