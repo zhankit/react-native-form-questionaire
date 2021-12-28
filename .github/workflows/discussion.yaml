@@ -25,7 +25,7 @@
          id: get_repo_id2
          with:
            query: |
-             query release($owner:String!,$repo:String!,$discussion_number:Int!) {
+             query release($owner:String!,$repo:String!) {
                repository(owner:$owner, name:$repo) {
                  discussion(first:10) {
                    categoryId
@@ -34,7 +34,6 @@
              }
            owner: "zhankit"
            repo: ${{ github.event.repository.name }}
-           discussion_number: ${{ github.event.inputs.release_thread_id }}
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
