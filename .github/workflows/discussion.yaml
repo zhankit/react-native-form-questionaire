@@ -36,7 +36,7 @@
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            GITHUB_CONTEXT: ${{ toJSON(steps.get_repo_id.outputs.data) }}
 
-       - run: "echo $GITHUB_CONTEXT"
+       - run: echo "$GITHUB_CONTEXT"
      
        # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
