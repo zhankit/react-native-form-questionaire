@@ -25,7 +25,7 @@
          with:
            query: |
              query {
-               repository(owner:$owner, name:$repo) {
+               repository(owner: "zhankit", name: "${{ github.event.repository.name }}") {
                  id
                }
              }
