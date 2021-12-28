@@ -34,7 +34,8 @@
            discussion_number: ${{ github.event.inputs.release_thread_id }}
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-       - run: "echo api response: ${{ steps.get_repo_id.outputs.data }}"
+
+       - run: "echo api response: ${{ steps.get_repo_id.outputs.data.repository.id }}"
      
        # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
@@ -43,7 +44,7 @@
            query: |
              mutation {
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: "${{ github.event.repository.name }}", categoryId: "General", body: "The body", title: "The title"}) {
+               createDiscussion(input: {repositoryId: "${{ steps.get_repo_id.outputs.data.repository.id }}", categoryId: "General", body: "The body", title: "The title"}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
