@@ -34,8 +34,6 @@
            discussion_number: ${{ github.event.inputs.release_thread_id }}
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-       - run: echo "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}" "${{ toJSON(steps.get_repo_id.outputs).repository }}" "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
  
        - run: echo ${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}
 
@@ -46,7 +44,7 @@
            query: |
              mutation {
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: "${{ steps.get_repo_id.outputs.data.id }}", categoryId: "General", body: "The body", title: "The title"}) {
+               createDiscussion(input: {repositoryId: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}", categoryId: "General", body: "The body", title: "The title"}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
