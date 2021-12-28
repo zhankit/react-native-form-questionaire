@@ -16,13 +16,13 @@
  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
  jobs:
    check_new_fixes:
-     name: 'Check if new fixes are present in the thread since last run'
+     name: 'To create new discussion for RC'
      runs-on: ubuntu-latest
      steps:
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
          with:
-           mutation: |
+           query: |
              mutation {
                # input type: CreateDiscussionInput
                createDiscussion(input: {repositoryId: "1234", categoryId: "5678", body: "The body", title: "The title"}) {
