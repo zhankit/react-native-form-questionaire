@@ -35,12 +35,12 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-       - run: echo "${{ steps.get_repo_id.outputs.data }}" "${{ toJSON(steps.get_repo_id.outputs).repository }}" "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
+       - run: echo "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}" "${{ toJSON(steps.get_repo_id.outputs).repository }}" "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
  
-       - run: echo ${{ steps.get_repo_id.outputs.data }}
+       - run: echo "${{ steps.get_repo_id.outputs.data }}"
        
-       - run: echo ${{ steps.get_repo_id.outputs.data.repository }}
-       - run: echo ${{ toJSON(steps.get_repo_id.outputs.data.repository) }}
+       - run: echo "${{ steps.get_repo_id.outputs.data.repository }}"
+       - run: echo "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
 
 
        # 2. Create discussion
