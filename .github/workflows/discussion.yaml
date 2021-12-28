@@ -22,22 +22,17 @@
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
          with:
-           query: |
-             query release($owner:String!,$repo:String!,$discussion_number:Int!) {
-               repository(owner:$owner, name:$repo) {
-                 discussion(number:$discussion_number) {
-                   comments(first:10) {
-                     nodes {
-                       bodyText
-                     }
-                     pageInfo {
-                       hasNextPage
-                     }
-                   }
+           mutation: |
+             mutation {
+               # input type: CreateDiscussionInput
+               createDiscussion(input: {repositoryId: "1234", categoryId: "5678", body: "The body", title: "The title"}) {
+
+                 # response type: CreateDiscussionPayload
+                 discussion {
+                   id
                  }
                }
              }
-           owner: ${{ github.event.repository.owner.name }}
            repo: ${{ github.event.repository.name }}
            discussion_number: ${{ github.event.inputs.release_thread_id }}
          env:
