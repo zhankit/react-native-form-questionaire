@@ -44,7 +44,7 @@
            query: |
              mutation {
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: "${{ steps.get_repo_id.outputs.data.repository.id }}", categoryId: "General", body: "The body", title: "The title"}) {
+               createDiscussion(input: {repositoryId: "${{ steps.get_repo_id.outputs.data.id }}", categoryId: "General", body: "The body", title: "The title"}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
