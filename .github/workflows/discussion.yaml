@@ -34,10 +34,9 @@
            discussion_number: ${{ github.event.inputs.release_thread_id }}
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           GITHUB_CONTEXT: ${{ toJSON(steps.get_repo_id.outputs.data) }}
 
-       - run: echo "$GITHUB_CONTEXT"
-     
+       - run: echo "${{ steps.get_repo_id.outputs.repository.id }}"
+ 
        # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
