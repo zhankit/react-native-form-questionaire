@@ -25,7 +25,7 @@
            query: |
              mutation {
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: ${{ github.event.repository.name }}, categoryId: "General", body: "The body", title: "The title"}) {
+               createDiscussion(input: {repositoryId: "${{ github.event.repository.name }}", categoryId: "General", body: "The body", title: "The title"}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
