@@ -27,9 +27,7 @@
            query: |
              query release($owner:String!,$repo:String!) {
                repository(owner:$owner, name:$repo) {
-                 discussion(first:10) {
-                   categoryId
-                 }
+                 categoryId
                }
              }
            owner: "zhankit"
