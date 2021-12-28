@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
- name: Create an RC release
+ name: Discussion Thread
 
  # Controls when the workflow will run
  on:
