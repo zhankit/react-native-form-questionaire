@@ -8,10 +8,10 @@
      inputs:
        version_name:
          description: 'Version name of the release candidate build'
-         required: true
+         required: false
        release_thread_id:
          description: 'ID of the release discussion thread on the repo'
-         required: true
+         required: false
 
  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
  jobs:
@@ -35,7 +35,7 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-       - run: echo "${{ steps.get_repo_id.outputs.data }}" "${{ toJSON(steps.get_repo_id.outputs) }}" "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
+       - run: echo "${{ steps.get_repo_id.outputs }}" "${{ steps.get_repo_id.outputs.data }}" "${{ toJSON(steps.get_repo_id.outputs) }}" "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
  
        # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
