@@ -38,6 +38,10 @@
        - run: echo "${{ steps.get_repo_id.outputs.data }}" "${{ toJSON(steps.get_repo_id.outputs).repository }}" "${{ toJSON(steps.get_repo_id.outputs.data.repository) }}"
  
        - run: echo ${{ steps.get_repo_id.outputs.data }}
+       
+       - run: echo ${{ steps.get_repo_id.outputs.data.repository }}
+       - run: echo ${{ toJSON(steps.get_repo_id.outputs.data.repository) }}
+
 
        # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
