@@ -63,7 +63,7 @@
          run: |
           git fetch;
           RC_VERSION=7.43.0
-          echo "::set-output name=TAG_NAME::$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request")"
+          echo "::set-output name=TAG_NAME::$(echo `git log origin/release/$RC_VERSION..origin/master --pretty=tformat:"%h %s%x0D%x0A" --merges --grep="pull request"`)"
         
 
        - name: Processing Git differences
@@ -74,7 +74,7 @@
           
           git fetch;
           RC_VERSION=7.43.0
-          BODY=$(echo `git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request"`)
+          BODY=$(git log origin/release/$RC_VERSION..origin/master --merges --pretty=tformat:"%h %s%x0D%x0A" --grep="pull request");
           SAMPLE=$(curl https://httpbin.org/json)
           echo "<SCRIPT>\n"
           echo $BODY $SAMPLE
