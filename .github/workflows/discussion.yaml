@@ -19,6 +19,7 @@
          with:
            ref: 'master'
            token: ${{ secrets.GITHUB_TOKEN }}
+           fetch-depth: 0
        
      
       # 1. Get discussion list in this repository
