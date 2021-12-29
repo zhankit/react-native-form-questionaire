@@ -67,10 +67,12 @@
           git fetch;
           RC_VERSION=7.43.0
           BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
+          echo "::set-output name=DISCUSSION_BODY::$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request")"
           echo $BODY;
           echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
           echo "DISCUSSION_BODY2=$RC_VERSION" >> $GITHUB_ENV
 
+       - run: "echo api response: ${{ steps.get_git_differences.outputs.data }}"
 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
