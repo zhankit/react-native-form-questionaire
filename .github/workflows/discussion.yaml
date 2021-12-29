@@ -10,7 +10,7 @@
  jobs:
    check_new_fixes:
      name: 'To create new discussion for RC'
-     runs-on: ubuntu-latest
+     runs-on: macos-latest
      steps:
      
            # 1. Check out Code
