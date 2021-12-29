@@ -61,7 +61,7 @@
            DATA=${{ fromJson(steps.get_discussion_id.outputs.data).repository.discussionCategories }};
            echo $DATA;
            
-           echo "$x" | jq -r '.nodes[]|"\(.id) , \(.name)"'
+           echo "$DATA" | jq -r '.nodes[]|"\(.id) , \(.name)"'
 
            for item in ${DATA[@]}; do
              echo "items $item";
