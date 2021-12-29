@@ -69,8 +69,9 @@
            
            items=$(echo $DATA | jq -c -r '.[]')
            for item in ${items[@]}; do
-               echo $item
-               # whatever you are trying to do ...
+              id=$(echo $item | jq -r '.id')
+              name=$(echo $item | jq -r '.name')
+              echo $id $name
            done
            
            # This is to find the differences of the item
