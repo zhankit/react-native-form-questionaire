@@ -67,10 +67,10 @@
           git fetch;
           RC_VERSION=7.43.0
           BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
-          echo "::set-output name=DISCUSSION_BODY::$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request")"
-          echo $BODY;
-          echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
-          echo "DISCUSSION_BODY2=$RC_VERSION" >> $GITHUB_ENV
+          
+          echo 'DISCUSSION_BODY<<EOF' >> $GITHUB_ENV
+          git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
        - run: "echo api response: ${{ steps.get_git_differences.outputs.data }}"
 
@@ -93,7 +93,7 @@
            repositoryid: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
            categoryid: "DIC_kwDOFW434s4CATF2"
            body: "${{ env.DISCUSSION_BODY }}"
-           title: "${{ env.DISCUSSION_BODY2 }}"
+           title: "wasdasd"
            
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
