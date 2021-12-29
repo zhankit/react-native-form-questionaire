@@ -66,9 +66,10 @@
           
           git fetch;
           RC_VERSION=7.43.0
-          echo "DISCUSSION_BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request")" >> $GITHUB_ENV
+          BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
+          echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
+          echo "DISCUSSION_BODY2=$RC_VERSION" >> $GITHUB_ENV
 
-       - run: "echo ${{ steps.get_git_differences.outputs.data }}"
 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
@@ -89,7 +90,7 @@
            repositoryid: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
            categoryid: "DIC_kwDOFW434s4CATF2"
            body: "${{ env.DISCUSSION_BODY }}"
-           title: "Sameple Body"
+           title: "${{ env.DISCUSSION_BODY2 }}"
            
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
