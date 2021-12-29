@@ -62,7 +62,7 @@
            echo $DATA;
            
            for item in ${DATA[@]}; do
-             echo $item;
+             echo "items $item";
            done
            
            items=$(echo $DATA | jq -c -r '.[]')
