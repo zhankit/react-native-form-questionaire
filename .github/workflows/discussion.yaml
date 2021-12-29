@@ -9,9 +9,6 @@
        version_name:
          description: 'Version name of the release candidate build'
          required: false
-       release_thread_id:
-         description: 'ID of the release discussion thread on the repo'
-         required: false
 
  # A workflow run is made up of one or more jobs that can run sequentially or in parallel
  jobs:
@@ -20,19 +17,18 @@
      runs-on: ubuntu-latest
      steps:
      
-      # 1. Get the repo id
+      # 1. Get discussion list in this repository
        - uses: octokit/graphql-action@v2.x
-         id: get_repo_id2
+         id: get_discussion_id
          with:
            query: |
-             query release($owner:String!,$repo:String!) {
-               repository(owner:$owner, name:$repo) {
+             query discussion($owner: String!, $repo:String!) {
+               repository(owner: $owner, name: $repo) {
                  discussionCategories(first: 10) {
                    nodes {
-                    # type: Discussion
-                    id
-                    name
-                    emoji
+                     # type: Discussion
+                     id
+                     name
                    }
                  }
                }
@@ -42,24 +38,29 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-       # 1. Get the repo id
+       # 2. Get Repository ID
        - uses: octokit/graphql-action@v2.x
          id: get_repo_id
          with:
            query: |
-             query {
-               repository(owner: "zhankit", name: "${{ github.event.repository.name }}") {
+             query repo($owner: String!, $repo:String!) {
+               repository(owner: $owner, name: $repo) {
                  id
                }
              }
            owner: "zhankit"
            repo: ${{ github.event.repository.name }}
-           discussion_number: ${{ github.event.inputs.release_thread_id }}
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           
+       # 3. Data Processing
+       - name: Set the value
+         id: step_one
+         run: |
+           echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
+           curl https://httpbin.org/json >> $GITHUB_ENV
+           echo 'EOF' >> $GITHUB_ENV
  
-       - run: echo ${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}
-
        # 2. Create discussion
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
