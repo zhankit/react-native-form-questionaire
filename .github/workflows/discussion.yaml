@@ -57,7 +57,15 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
+       - name: export
+         id: version
+         shell: bash
+         run: |
+          git fetch;
+          RC_VERSION=7.43.0
+          echo "::set-output name=TAG_NAME::$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request")"
         
+
        - name: Processing Git differences
          id: get_git_differences
          shell: bash
@@ -71,6 +79,8 @@
           echo "<SCRIPT>\n"
           echo $BODY
           echo "<EOD>\n"
+
+       - run: "echo api response: ${{ steps.version.outputs.TAG_NAME }}"
 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
