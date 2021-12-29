@@ -106,8 +106,6 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            
-           
-       - run: "echo api response: ${{ steps.get_release_thread.outputs.data }}"
-
+        
            
        - run: "echo api response: ${{ fromJson(steps.get_release_thread.outputs.data).createDiscussion.discussion.number }}"
