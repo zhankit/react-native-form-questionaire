@@ -76,7 +76,7 @@
           git fetch;
           RC_VERSION=7.43.0
 
-          BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
+          BODY=$(git log origin/release/$RC_VERSION..origin/master --pretty=tformat:"%h %s%x0D%x0A" --merges --grep="pull request");
           echo 'DISCUSSION_BODY<<EOF' >> $GITHUB_ENV
           echo "$BODY" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
