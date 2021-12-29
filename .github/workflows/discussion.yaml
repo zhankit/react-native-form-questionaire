@@ -58,13 +58,17 @@
          id: step_one
          run: |
            # Loop to find the discussionID
-           for item in ${{ fromJson(steps.get_repo_id.outputs.data) }}; do
+           echo $DISCUSSION_LIST
+           for item in $DISCUSSION_LIST; do
              echo $item
              # if found then store in the environment
              # echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV2
            done
            
+           echo api response: ${{ steps.get_release_thread.outputs.data }}
            # This is to find the differences of the item
+         env:
+          DISCUSSION_LIST: ${{ fromJson(steps.get_repo_id.outputs.data) }}
 
  
        # 4. Create discussion
