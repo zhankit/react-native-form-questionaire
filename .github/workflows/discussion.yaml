@@ -34,6 +34,9 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+       - run: "echo api response: ${{ steps.get_discussion_id.outputs.data }}"
+
+
        # 2. Get Repository ID
        - uses: octokit/graphql-action@v2.x
          id: get_repo_id
@@ -53,27 +56,8 @@
        - name: Set the value
          id: step_one
          run: |
-           # Loop to find the discussionID
-           DATA=${{ fromJson(steps.get_discussion_id.outputs.data).repository.discussionCategories }};
-           echo $DATA;
-           
-           echo "$DATA" | jq -r '.nodes[]|"\(.id) , \(.name)"'
 
-           for item in ${DATA[@]}; do
-             echo "items $item";
-           done
-           
-           #items=$(echo $DATA | jq -c -r '.[]')
-           #for item in ${items[@]}; do
-           #   id=$(echo $item | jq -r '.id')
-           #  name=$(echo $item | jq -r '.name')
-           #   echo $id $name
-           #done
-           
-           X=("hello world" "goodnight moon")
-           printf '%s\n' "${X[@]}" | jq -R . | jq -s .
-           
-           # This is to find the differences of the item
+
 
  
        # 4. Create discussion
