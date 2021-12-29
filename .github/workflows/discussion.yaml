@@ -13,6 +13,14 @@
      runs-on: ubuntu-latest
      steps:
      
+           # 1. Check out Code
+       - name: Checkout code
+         uses: actions/checkout@v2
+         with:
+           ref: 'master'
+           token: ${{ secrets.RELEASE_TOKEN }}
+       
+     
       # 1. Get discussion list in this repository
        - uses: octokit/graphql-action@v2.x
          id: get_discussion_id
