@@ -28,7 +28,7 @@
              query release($owner:String!,$repo:String!) {
                repository(owner:$owner, name:$repo) {
                  discussionCategories(first: 10) {
-                   nodes(name: "General") {
+                   nodes {
                     # type: Discussion
                     id
                     name
@@ -41,8 +41,6 @@
            repo: ${{ github.event.repository.name }}
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-       - run: echo ${{ steps.get_repo_id2.outputs.data }}
 
        # 1. Get the repo id
        - uses: octokit/graphql-action@v2.x
@@ -69,7 +67,7 @@
            query: |
              mutation {
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}", categoryId: "General", body: "The body", title: "The title"}) {
+               createDiscussion(input: {repositoryId: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}", categoryId: "DIC_kwDOFW434s4CATF2", body: "The body", title: "The title"}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
