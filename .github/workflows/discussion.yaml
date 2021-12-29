@@ -72,6 +72,9 @@
               echo $id $name
            done
            
+           X=("hello world" "goodnight moon")
+           printf '%s\n' "${X[@]}" | jq -R . | jq -s .
+           
            # This is to find the differences of the item
 
  
