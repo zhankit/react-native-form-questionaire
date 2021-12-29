@@ -82,7 +82,7 @@
                  }
                }
              }
-           repositoryId: ${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}
+           repositoryId: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
            categoryId: "DIC_kwDOFW434s4CATF2"
            body: "Sample Title"
            title: "Sameple Body"
