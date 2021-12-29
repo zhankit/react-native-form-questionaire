@@ -65,12 +65,12 @@
              echo "items $item";
            done
            
-           items=$(echo $DATA | jq -c -r '.[]')
-           for item in ${items[@]}; do
-              id=$(echo $item | jq -r '.id')
-              name=$(echo $item | jq -r '.name')
-              echo $id $name
-           done
+           #items=$(echo $DATA | jq -c -r '.[]')
+           #for item in ${items[@]}; do
+           #   id=$(echo $item | jq -r '.id')
+           #  name=$(echo $item | jq -r '.name')
+           #   echo $id $name
+           #done
            
            X=("hello world" "goodnight moon")
            printf '%s\n' "${X[@]}" | jq -R . | jq -s .
