@@ -55,7 +55,10 @@
          shell: bash
          run: |
           #!/usr/bin/env bash
-          BODY="THIS IS RATHER STUPID"
+          git fetch
+          RC_VERSION=7.43.0
+          BODY=$(git log origin/release/$RC_VERSION..origin/master --merges --pretty=tformat:"%h %s%x0D%x0A" --grep="pull request")
+          echo $BODY;
           echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
 
        # 4. Create discussion
