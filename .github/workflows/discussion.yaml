@@ -56,7 +56,7 @@
          run: |
           #!/usr/bin/env bash
           BODY="THIS IS RATHER STUPID"
-          echo "::set-env name=DISCUSSION_BODY::$BODY"
+          echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
