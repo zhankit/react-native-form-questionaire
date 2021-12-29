@@ -71,6 +71,10 @@
           echo 'DISCUSSION_BODY<<EOF' >> $GITHUB_ENV
           git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
+          
+          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
+          curl https://httpbin.org/json >> $GITHUB_ENV
+          echo 'EOF' >> $GITHUB_ENV
 
        - run: "echo api response: ${{ steps.get_git_differences.outputs.data }}"
 
@@ -93,7 +97,7 @@
            repositoryid: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
            categoryid: "DIC_kwDOFW434s4CATF2"
            body: "${{ env.DISCUSSION_BODY }}"
-           title: "wasdasd"
+           title: "${{ env.JSON_RESPONSE }}"
            
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
