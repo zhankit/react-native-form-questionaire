@@ -77,7 +77,7 @@
           RC_VERSION=7.43.0
           BODY=$(git log origin/release/$RC_VERSION..origin/master --merges --pretty=tformat:"%h %s%x0D%x0A" --grep="pull request");
           SAMPLE=$(curl https://httpbin.org/json)
-          echo "<SCRIPT>\n"
+          echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
           echo $BODY $SAMPLE
           echo "<EOD>\n"
 
@@ -102,7 +102,7 @@
            repositoryid: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
            categoryid: "DIC_kwDOFW434s4CATF2"
            body: "${{ env.DISCUSSION_BODY }}"
-           title: "${{ env.JSON_RESPONSE }}"
+           title: "123"
            
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
