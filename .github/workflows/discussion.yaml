@@ -58,16 +58,16 @@
          id: step_one
          run: |
            # Loop to find the discussionID
-           echo "RESPONSE ${{ steps.get_discussion_id.outputs.data }}";
-           echo "RESPONSE ${{ fromJson(steps.get_discussion_id.outputs.data) }}";
+           DATA=${{ fromJson(steps.get_discussion_id.outputs.data).repository.discussionCategories.nodes }}";
+           echo $DATA;
            
-           for item in ${{ tojson(steps.get_discussion_id.outputs.data) }}; do
+           for item in $DATA; do
              echo "item $item.id $item.name";
              # if found then store in the environment
              # echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV2
            done
            
-           items=$(echo "${{ toJSON(steps.get_discussion_id.outputs.data) }}" | jq -c -r '.[]')
+           items=$(echo $DATA | jq -c -r '.[]')
            for item in ${items[@]}; do
                echo $item
                # whatever you are trying to do ...
