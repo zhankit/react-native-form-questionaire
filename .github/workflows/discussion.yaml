@@ -57,18 +57,24 @@
        - name: Set the value
          id: step_one
          run: |
-           echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-           curl https://httpbin.org/json >> $GITHUB_ENV
-           echo 'EOF' >> $GITHUB_ENV
+           # Loop to find the discussionID
+           for item in ${{ fromJson(steps.get_repo_id.outputs.data) }}; do
+             echo $item
+             # if found then store in the environment
+             # echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV2
+           done
+           
+           # This is to find the differences of the item
+
  
-       # 2. Create discussion
+       # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
          with:
            query: |
-             mutation {
+             mutation newDiscussion($repositoryId: String!, $categoryId: String!, $body: String!, $title: String! ){
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}", categoryId: "DIC_kwDOFW434s4CATF2", body: "The body", title: "The title"}) {
+               createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, body: $body, title: $title}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
@@ -76,8 +82,13 @@
                  }
                }
              }
-           repo: ${{ github.event.repository.name }}
-           discussion_number: ${{ github.event.inputs.release_thread_id }}
+           repositoryId: ${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}
+           categoryId: "DIC_kwDOFW434s4CATF2"
+           body: "Sample Title"
+           title: "Sameple Body"
+           
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           
+           
        - run: "echo api response: ${{ steps.get_release_thread.outputs.data }}"
