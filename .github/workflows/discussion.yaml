@@ -102,7 +102,7 @@
            categoryid: "DIC_kwDOFW434s4CATF2"
            body: |
             "${{ env.DISCUSSION_BODY }}"
-           title: "123"
+           title: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            
