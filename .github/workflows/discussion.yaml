@@ -60,12 +60,12 @@
            # Loop to find the discussionID
            echo "RESPONSE ${{ fromJson(steps.get_discussion_id.outputs.data) }}";
            for item in ${{ fromJson(steps.get_discussion_id.outputs.data) }}; do
-             echo $item;
+             echo "item $item.id $item.name";
              # if found then store in the environment
              # echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV2
            done
            
-           echo api response: ${{ steps.get_release_thread.outputs.data }}
+           echo "api response: ${{ steps.get_release_thread.outputs.data }}"
            # This is to find the differences of the item
 
  
