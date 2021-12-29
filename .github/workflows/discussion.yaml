@@ -60,7 +60,7 @@
            # Loop to find the discussionID
            DATA=${{ fromJson(steps.get_discussion_id.outputs.data).repository.discussionCategories.nodes }};
            echo $DATA;
-           cat $DATA;
+           echo $DATA
            
            for item in $DATA; do
              echo $item;
