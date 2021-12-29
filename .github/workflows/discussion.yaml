@@ -68,15 +68,9 @@
           RC_VERSION=7.43.0
           BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
           
-          echo 'DISCUSSION_BODY<<EOF' >> $GITHUB_ENV
-          git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-          
-          echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV
-          curl https://httpbin.org/json >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
-
-       - run: "echo api response: ${{ steps.get_git_differences.outputs.data }}"
+          echo "<SCRIPT>\n"
+          echo $BODY
+          echo "<EOD>\n"
 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
