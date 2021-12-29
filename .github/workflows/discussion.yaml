@@ -58,11 +58,19 @@
          id: step_one
          run: |
            # Loop to find the discussionID
+           echo "RESPONSE ${{ steps.get_discussion_id.outputs.data }}";
            echo "RESPONSE ${{ fromJson(steps.get_discussion_id.outputs.data) }}";
-           for item in ${{ fromJson(steps.get_discussion_id.outputs.data) }}; do
+           
+           for item in ${{ tojson(steps.get_discussion_id.outputs.data) }}; do
              echo "item $item.id $item.name";
              # if found then store in the environment
              # echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV2
+           done
+           
+           items=$(echo "${{ toJSON(steps.get_discussion_id.outputs.data) }}" | jq -c -r '.[]')
+           for item in ${items[@]}; do
+               echo $item
+               # whatever you are trying to do ...
            done
            
            echo "api response: ${{ steps.get_release_thread.outputs.data }}"
