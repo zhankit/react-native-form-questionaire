@@ -60,12 +60,9 @@
            # Loop to find the discussionID
            DATA=${{ fromJson(steps.get_discussion_id.outputs.data).repository.discussionCategories.nodes }};
            echo $DATA;
-           echo $DATA
            
-           for item in $DATA; do
+           for item in ${DATA[@]}; do
              echo $item;
-             # if found then store in the environment
-             # echo 'JSON_RESPONSE<<EOF' >> $GITHUB_ENV2
            done
            
            items=$(echo $DATA | jq -c -r '.[]')
