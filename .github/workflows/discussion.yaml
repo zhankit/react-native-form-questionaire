@@ -68,7 +68,7 @@
            echo api response: ${{ steps.get_release_thread.outputs.data }}
            # This is to find the differences of the item
          env:
-          DISCUSSION_LIST: ${{ fromJson(steps.get_repo_id.outputs.data) }}
+           DISCUSSION_LIST: ${{ fromJson(steps.get_repo_id.outputs.data) }}
 
  
        # 4. Create discussion
