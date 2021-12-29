@@ -80,7 +80,6 @@
           git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
           echo 'EOF' >> $GITHUB_ENV
 
-       - run: "echo api response: ${{ steps.version.outputs.TAG_NAME }}"
 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
@@ -100,9 +99,8 @@
              }
            repositoryid: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
            categoryid: "DIC_kwDOFW434s4CATF2"
-           body: "${{ env.DISCUSSION_BODY }}"
+           body: ${{ env.DISCUSSION_BODY }}
            title: "123"
-           
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            
