@@ -69,6 +69,8 @@
           echo "BODY: $BODY";
           echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
 
+       - run: "echo ${{ steps.get_git_differences.outputs.data }}"
+
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
