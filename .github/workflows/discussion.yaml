@@ -76,9 +76,12 @@
           git fetch;
           RC_VERSION=7.43.0
 
-          echo 'DISCUSSION_BODY<<EOF' >> $GITHUB_ENV
-          git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
-          echo 'EOF' >> $GITHUB_ENV
+          BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request"");
+          echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
+
+          #echo 'DISCUSSION_BODY<<EOF' >> $GITHUB_ENV
+          #git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
+          #echo 'EOF' >> $GITHUB_ENV
 
 
        # 4. Create discussion
