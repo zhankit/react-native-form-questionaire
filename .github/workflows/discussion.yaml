@@ -66,9 +66,7 @@
           
           git fetch;
           RC_VERSION=7.43.0
-          BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
-          echo "BODY: $BODY <EOD>";
-          echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
+          git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request" >> $GITHUB_ENV
 
        - run: "echo ${{ steps.get_git_differences.outputs.data }}"
 
