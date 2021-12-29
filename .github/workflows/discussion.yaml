@@ -34,9 +34,6 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-       - run: "echo api response: ${{ steps.get_discussion_id.outputs.data }}"
-
-
        # 2. Get Repository ID
        - uses: octokit/graphql-action@v2.x
          id: get_repo_id
@@ -52,14 +49,7 @@
          env:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            
-       # 3. Data Processing
-       - name: Set the value
-         id: step_one
-         run: |
 
-
-
- 
        # 4. Create discussion
        - uses: octokit/graphql-action@v2.x
          id: get_release_thread
