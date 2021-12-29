@@ -67,6 +67,7 @@
           git fetch;
           RC_VERSION=7.43.0
           BODY=$(git log origin/release/$RC_VERSION..origin/master --oneline --merges --grep="pull request");
+          echo $BODY;
           echo "DISCUSSION_BODY=$BODY" >> $GITHUB_ENV
           echo "DISCUSSION_BODY2=$RC_VERSION" >> $GITHUB_ENV
 
