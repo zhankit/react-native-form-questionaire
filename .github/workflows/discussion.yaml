@@ -55,9 +55,9 @@
          id: get_release_thread
          with:
            query: |
-             mutation newDiscussion($repositoryId: String!, $categoryId: String!, $body: String!, $title: String! ){
+             mutation newDiscussion($repositoryid: String!, $categoryid: String!, $body: String!, $title: String! ){
                # input type: CreateDiscussionInput
-               createDiscussion(input: {repositoryId: $repositoryId, categoryId: $categoryId, body: $body, title: $title}) {
+               createDiscussion(input: {repositoryId: $repositoryid, categoryId: $categoryid, body: $body, title: $title}) {
 
                  # response type: CreateDiscussionPayload
                  discussion {
@@ -65,8 +65,8 @@
                  }
                }
              }
-           repositoryId: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
-           categoryId: "DIC_kwDOFW434s4CATF2"
+           repositoryid: "${{ fromJson(steps.get_repo_id.outputs.data).repository.id }}"
+           categoryid: "DIC_kwDOFW434s4CATF2"
            body: "Sample Title"
            title: "Sameple Body"
            
